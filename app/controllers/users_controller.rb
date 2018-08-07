@@ -3,6 +3,8 @@
 class UsersController < ApplicationController
   before_action :find_user, except: %i[index new create]
 
+  def index; end
+
   def show; end
 
   def new
@@ -12,8 +14,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      flash[:success] = 'Đăng ký thành công'
-      redirect_to @user
+      @user.send_activation_email
+      flash[:info] = 'Please check your email to activate your account.'
+      redirect_to root_url
     else
       flash.now[:danger] = 'Đăng ký không thành công'
       render :new
