@@ -1,0 +1,102 @@
+version: 2 # use CircleCI 2.0
+
+defaults: &defaults
+  parallelism: 3 # run three instances of this job in parallel
+  working_directory: ~/code # directory where steps will run
+  docker: # run the steps with Docker
+    - image: circleci/ruby:2.5-node # ...with this image as the primary container; this is where all `steps` will run
+      environment: # environment variables for primary container
+        BUNDLE_JOBS: 3
+        BUNDLE_RETRY: 3
+        BUNDLE_PATH: vendor/bundle
+        PGHOST: 127.0.0.1
+        PGUSER: circleci-intern-ruby
+        RAILS_ENV: test
+    - image: circleci/postgres:9.5-alpine # database image
+      environment: # environment variables for database
+        POSTGRES_USER: circleci-intern-ruby
+        POSTGRES_DB: rails_intern
+        POSTGRES_PASSWORD: ""
+
+jobs: # a collection of steps
+  prepare:
+    <<: *defaults
+    steps: # a collection of executable commands
+      - checkout # special step to check out source code to working directory
+
+      # Which version of bundler?
+      - run:
+          name: Which bundler?
+          command: bundle -v
+
+      # Restore bundle cache
+      - restore_cache:
+          key: rails-intern-bundle-v2-{{ checksum "Gemfile.lock" }}
+
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      # Store bundle cache
+      - save_cache:
+          key: rails-intern-bundle-v2-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      - persist_to_workspace:
+          root: ~/code
+          paths:
+            - .
+
+  check_style:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/code
+
+      - run:
+          name: Run rubocop
+          command: |
+            bundle exec rubocop --fail-level error \
+            --require rubocop/formatter/checkstyle_formatter \
+            --format RuboCop::Formatter::CheckstyleFormatter \
+            --no-color \
+            --rails \
+            --out tmp/rubocop-checkstyle.xml
+
+      - run: 
+          name: Copy check-style result
+          command: |
+            mkdir -p ~/check-result/
+            cp tmp/rubocop-checkstyle.xml ~/check-result/
+
+      - store_artifacts:
+          path: ~/check-result/
+          destination: check-result
+
+      - persist_to_workspace:
+          root: ~/code
+          paths:
+            - .    
+
+  report:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/code
+
+      - run:
+          name: Report to github PR
+          command: bundle exec danger
+
+workflows:
+  version: 2
+  code_review:
+    jobs:
+      - prepare
+      - check_style:
+          requires:
+            - prepare
+      - report:
+          requires:
+            - check_style
