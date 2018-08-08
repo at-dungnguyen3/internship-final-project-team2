@@ -18,6 +18,17 @@ class SessionsController < ApplicationController
     redirect_to root_url
   end
 
+  def callback
+    @user = User.find_or_create_from_auth_hash(auth_hash)
+    if @user
+      log_in @user
+      redirect_back_or @user
+    else
+      flash[:danger] = 'Email đã tồn tại'
+      render :new
+    end
+  end
+
   private
 
     def remember_status(user)
@@ -33,5 +44,9 @@ class SessionsController < ApplicationController
         flash[:warning] = 'Tài khoản chưa được kích hoạt'
         redirect_to root_path
       end
+    end
+
+    def auth_hash
+      request.env['omniauth.auth']
     end
 end

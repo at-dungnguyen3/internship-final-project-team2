@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_180_808_045_704) do
+ActiveRecord::Schema.define(version: 20_180_808_072_927) do
   create_table 'users', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8', force: :cascade do |t|
     t.string 'email'
     t.string 'first_name', null: false
@@ -25,5 +25,7 @@ ActiveRecord::Schema.define(version: 20_180_808_045_704) do
     t.boolean 'activated?', default: false
     t.datetime 'activated_at'
     t.string 'remember_digest'
+    t.string 'provider'
+    t.string 'uid'
   end
 end
