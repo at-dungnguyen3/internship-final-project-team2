@@ -13,4 +13,8 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   get 'auth/:provider/callback', to: 'sessions#callback'
   get 'auth/failure', to: redirect('/')
+
+  namespace :admin do
+    root 'static_pages#home'
+  end
 end
