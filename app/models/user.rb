@@ -22,6 +22,22 @@ class User < ApplicationRecord
     def new_token
       SecureRandom.urlsafe_base64
     end
+
+    def find_or_create_from_auth_hash(auth)
+      if where(provider: nil, uid: nil, email: auth.info.email).first
+        nil
+      else
+        where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
+          user.provider = auth.provider
+          user.uid = auth.uid
+          user.first_name = auth.info.first_name
+          user.last_name = auth.info.last_name
+          user.email = auth.info.email
+          user.password = digest(new_token)
+          user.save
+        end
+      end
+    end
   end
 
   def authenticated?(attribute, token)
