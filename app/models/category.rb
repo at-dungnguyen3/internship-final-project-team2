@@ -11,7 +11,7 @@ class Category < ApplicationRecord
 
   def self.search(term)
     if term
-      where("LOWER(name) LIKE CONCAT(CONVERT('#{term}',BINARY), '%')").order('id DESC')
+      where("LOWER(name) LIKE CONCAT('%',CONVERT('#{term.mb_chars.downcase}',BINARY), '%')").order('id DESC')
     else
       where('categories_id IS NULL').order('id DESC')
     end
