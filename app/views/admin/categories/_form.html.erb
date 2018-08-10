@@ -1,0 +1,12 @@
+<%= form_for [:admin,@category] do |f| %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, placeholder: 'Tên danh mục', class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label(:categories_id, "Danh mục cha") %>
+    <%= f.select(:categories_id, options_for_select(select_categories(@category.id), selected: @category.categories_id), { include_blank: true }, class: 'form-control' ) %>
+  </div>
+  <%= f.submit "Xác nhận", class: 'btn btn-success' %>
+  <%= f.submit "Nhập lại", class: 'btn btn-warning', type: 'reset' %>
+<% end %>

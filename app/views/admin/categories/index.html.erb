@@ -1,0 +1,48 @@
+<% provide(:page_name, 'Quản lý danh mục') %>
+<% provide(:search_path, admin_categories_path) %>
+<div class="row">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span><%= @category.nil? ? 'Danh sách danh mục cha' : @category.name %></span>
+    </div>
+    <div class="panel-body">
+      <div class="table-responsive">
+        <% if @categories.any? %>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Tên danh mục</th>
+                <th>Danh mục cha</th>
+                <th>Chức năng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @categories.each_with_index do |cat, i| %>
+              <tr>
+                <td><%= i + 1 %></td>
+                <td><%= link_to_if_has_childs(cat) %></td>
+                <td><%= parent_cat_name(cat.categories_id) %></td>
+                <td>
+                  <%= link_to edit_admin_category_path(cat.id), class: "btn btn-warning" do %>
+                    <%= content_tag(:i, "", class: "fa fa-edit fa-fw", title: "Cập nhập danh mục") %>
+                  <% end %>
+                  <%= link_to admin_category_path(cat.id), data: { confirm: "Bạn chắc chắn muốn xóa mục này?" }, method: :delete, class: "btn btn-danger" do %>
+                    <%= content_tag(:i, "", class: "fa fa-trash fa-fw", title: "Xóa danh mục") %>
+                  <% end %>
+                </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <%= will_paginate @categories %>
+        <% else %>
+          <p>Không tìm thấy danh mục</p>
+        <% end %>
+        <%= link_to new_admin_category_path, class: "btn btn-success pull-right" do %>
+          <%= content_tag(:i, "", class: "fa fa-plus fa-fw", title: "Thêm danh mục") %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

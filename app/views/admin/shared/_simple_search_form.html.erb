@@ -1,0 +1,8 @@
+<%= form_tag yield(:search_path), method: :get, class: "input-group custom-search-form" do %>
+  <%= text_field_tag :term, params[:term], placeholder: "Tìm kiếm", class: "form-control" %>
+  <span class="input-group-btn">
+  <%= button_tag(type: "submit", name: nil, class: "btn btn-primary") do %>
+    <%= content_tag(:i, "", class: "fa fa-search fa-fw") %>
+  <% end %>
+  </span>
+<% end %>
