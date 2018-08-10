@@ -1,6 +1,9 @@
 <div class="navbar-default sidebar" role="navigation">
   <div class="sidebar-nav navbar-collapse">
     <ul class="nav" id="side-menu">
+      <li class="sidebar-search">
+        <%= render 'admin/shared/simple_search_form' %>
+      </li>
       <li>
         <%= link_to admin_root_path do %>
           <%= content_tag(:i, "", class: "fa fa-dashboard fa-fw") %>
