@@ -1,0 +1,37 @@
+<% provide(:page_name, 'Quản lý sản phẩm') %>
+<% provide(:search_path, admin_products_path) %>
+<div class="row">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span>Danh sách sản phẩm</span>
+    </div>
+    <div class="panel-body">
+      <div class="table-responsive">
+        <% if @products.any? %>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th width="20%">Hình ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Tên danh mục</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+                <th>Chức năng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render partial: "product", collection: @products %>
+            </tbody>
+          </table>
+        <%= will_paginate @products %>
+        <% else %>
+          <p>Không tìm thấy sản phẩm</p>
+        <% end %>
+        <%= link_to new_admin_product_path, class: "btn btn-success pull-right" do %>
+          <%= content_tag(:i, "", class: "fa fa-plus fa-fw", title: "Thêm sản phẩm") %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

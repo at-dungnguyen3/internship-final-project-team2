@@ -3,6 +3,7 @@
 class Category < ApplicationRecord
   has_many :childs, foreign_key: 'categories_id', class_name: Category.name, dependent: :destroy
   belongs_to :parent, foreign_key: 'categories_id', class_name: Category.name, optional: true
+  has_many :products
 
   validates :name, presence: true, uniqueness: { scope: :categories_id }
 

@@ -1,0 +1,14 @@
+<% unless @picture.new_record? %>
+  <div class="col-md-3">
+    <%= image_tag @picture.image.url %>
+  </div>
+<% end %>
+<%= form_for([:admin,@picture]) do |f| %>
+  <div class="field">
+    <%= f.label :image, "Hình ảnh" %><br>
+    <%= f.file_field :image %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
