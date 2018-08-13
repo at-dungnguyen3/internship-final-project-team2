@@ -1,0 +1,44 @@
+<%= form_for [:admin,@product] do |f| %>
+  <div class="form-group">
+    <%= f.label :name, "Tên sản phẩm" %>
+    <%= f.text_field :name, placeholder: 'Tên sản phẩm', class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label(:category_id, "Tên danh mục") %>
+    <%= f.select(:category_id, options_for_select(select_childs_categories, selected: @product.category_id), { include_blank: true }, class: 'form-control' ) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :quantity, "Số lượng" %>
+    <%= f.number_field :quantity, min: 0, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :price, "Giá" %>
+    <%= f.number_field :price, min: 0, step: 1000, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :bid_step, "Bước nhảy" %>
+    <%= f.number_field :bid_step, min: 1000, step: 1000, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :period, "Chu kỳ" %>
+    <%= f.number_field :period, min: 20, step: 10, class: 'form-control' %>
+  </div>
+   <div class="form-group">
+    <%= f.label :description, "Mô tả sản phẩm" %>
+    <%= f.text_area :description, class: 'form-control' %>
+  </div>
+   <div class="form-group">
+    <%= f.label :detail, "Chi tiết sản phẩm" %>
+    <%= f.text_area :detail, class: 'form-control' %>
+  </div>
+  <% if @product.new_record? %>
+    <div class="form-group">
+      <%= f.fields_for :pictures do |p| %>
+        <%= f.label :image, "Hình ảnh" %>
+        <%= f.file_field :image, multiple: true, name: "product[pictures_attributes][][image]", accept: 'image/jpeg,image/gif,image/png', class: 'form-control' %>
+      <% end %>
+    </div>
+  <% end %>
+  <%= f.submit "Xác nhận", class: 'btn btn-success' %>
+  <%= f.submit "Nhập lại", class: 'btn btn-warning', type: 'reset' %>
+<% end %>

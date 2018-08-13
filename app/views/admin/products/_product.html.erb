@@ -1,0 +1,16 @@
+<tr>
+  <td><%= product.id %></td>
+  <td><%= image_tag product.pictures.first.image.url if product.pictures.any? %></td>
+  <td><%= link_to product.name, admin_product_path(product.id) %></td>
+  <td><%= product.category.name if !product.category.nil? %></td>
+  <td><%= product.quantity %></td>
+  <td><%= product.price %></td>
+  <td>
+  <%= link_to edit_admin_product_path(product.id), class: "btn btn-warning" do %>
+    <%= content_tag(:i, "", class: "fa fa-edit fa-fw", title: "Cập nhập danh mục") %>
+  <% end %>
+  <%= link_to admin_product_path(product.id), data: { confirm: "Bạn chắc chắn muốn xóa mục này?" }, method: :delete, class: "btn btn-danger" do %>
+    <%= content_tag(:i, "", class: "fa fa-trash fa-fw", title: "Xóa danh mục") %>
+  <% end %>
+  </td>
+</tr>

@@ -462,3 +462,7 @@ table.dataTable thead .sorting:after {
   border: 1px solid #eee;
   color: #ddd;
 }
+
+img {
+  display:block; width:100%; height:auto;
+}

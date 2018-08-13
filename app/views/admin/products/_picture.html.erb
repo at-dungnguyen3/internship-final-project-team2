@@ -1,0 +1,6 @@
+<div class="col-md-3">
+  <%= image_tag picture.image.url %>
+  <br>
+  <%= link_to "Cập nhập ảnh", edit_admin_picture_path(picture), class: "btn btn-warning" %>
+  <%= link_to "Xóa ảnh", admin_picture_path(picture), method: :delete, data: { confirm: "Xóa ảnh này?" }, class: "btn btn-danger" %>
+</div>

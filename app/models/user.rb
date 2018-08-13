@@ -36,6 +36,7 @@ class User < ApplicationRecord
           user.email = auth.info.email
           user.password = digest(new_token)
           user.save
+          user.activate
         end
       end
     end
