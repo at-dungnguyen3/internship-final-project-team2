@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_180_813_020_249) do
+ActiveRecord::Schema.define(version: 20_180_814_032_554) do
   create_table 'categories', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8', force: :cascade do |t|
     t.string 'name', null: false
     t.bigint 'categories_id'
@@ -34,8 +34,6 @@ ActiveRecord::Schema.define(version: 20_180_813_020_249) do
     t.string 'detail', null: false
     t.integer 'quantity', default: 0
     t.integer 'price', default: 0
-    t.integer 'period', default: 0
-    t.integer 'bid_step', default: 0
     t.bigint 'category_id'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false

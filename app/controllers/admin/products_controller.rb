@@ -52,7 +52,7 @@ module Admin
     private
 
       def product_params
-        params.require(:product).permit(:name, :description, :detail, :quantity, :price, :period, :bid_step, :category_id, pictures_attributes: %i[id product_id image _destroy])
+        params.require(:product).permit(:name, :description, :detail, :quantity, :price, :category_id, pictures_attributes: %i[id product_id image _destroy])
       end
 
       def find_product

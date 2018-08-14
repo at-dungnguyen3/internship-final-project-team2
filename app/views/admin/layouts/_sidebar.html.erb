@@ -10,6 +10,18 @@
           Trang chủ
         <% end %>
       </li>
+      <li>
+        <%= link_to admin_categories_path do %>
+          <%= content_tag(:i, "", class: "fa fa-tags fa-fw") %>
+          Danh mục
+        <% end %>
+      </li>
+      <li>
+        <%= link_to admin_products_path do %>
+          <%= content_tag(:i, "", class: "fa fa-product-hunt fa-fw") %>
+          Sản phẩm
+        <% end %>
+      </li>
     </ul>
   </div>
 </div>
