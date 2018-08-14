@@ -10,8 +10,6 @@ class Product < ApplicationRecord
   validates :detail, presence: true
   validates :quantity, numericality: { greater_than_or_equal_to: 0 }
   validates :price, numericality: { greater_than_or_equal_to: 0 }
-  validates :period, numericality: { greater_than_or_equal_to: 0 }
-  validates :bid_step, numericality: { greater_than_or_equal_to: 0 }
 
   def self.search(term)
     if term
