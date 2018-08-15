@@ -4,6 +4,7 @@ class Product < ApplicationRecord
   belongs_to :category
   has_many :pictures, dependent: :destroy
   accepts_nested_attributes_for :pictures, allow_destroy: true
+  has_many :auctions, dependent: :destroy
 
   validates :name, presence: true
   validates :description, presence: true

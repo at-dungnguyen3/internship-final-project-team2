@@ -1,10 +1,10 @@
-<% provide(:page_name, 'Thêm danh mục') %>
-<% provide(:search_path, admin_categories_path) %>
+<% provide(:page_name, 'Thêm thông tin đấu giá') %>
+<% provide(:search_path, admin_products_path) %>
 <div class="row">
   <div class="panel panel-default">
     <div class="panel-body">
       <div class="col-lg-6">
-        <%= render 'admin/categories/form' %>
+        <%= render "admin/auctions/form" %>
       </div>
     </div>
   </div>

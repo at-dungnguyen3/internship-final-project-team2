@@ -6,11 +6,14 @@
   <td><%= product.quantity %></td>
   <td><%= product.price %></td>
   <td>
-  <%= link_to edit_admin_product_path(product.id), class: "btn btn-warning" do %>
-    <%= content_tag(:i, "", class: "fa fa-edit fa-fw", title: "Cập nhập danh mục") %>
-  <% end %>
-  <%= link_to admin_product_path(product.id), data: { confirm: "Bạn chắc chắn muốn xóa mục này?" }, method: :delete, class: "btn btn-danger" do %>
-    <%= content_tag(:i, "", class: "fa fa-trash fa-fw", title: "Xóa danh mục") %>
-  <% end %>
+    <%= link_to admin_product_auctions_path(product.id), class: "btn btn-primary" do %>
+      <%= content_tag(:i, "", class: "fa fa-clock-o fa-fw", title: "Thêm phiên đấu giá") %>
+    <% end %>
+    <%= link_to edit_admin_product_path(product.id), class: "btn btn-warning" do %>
+      <%= content_tag(:i, "", class: "fa fa-edit fa-fw", title: "Cập nhập sản phẩm") %>
+    <% end %>
+    <%= link_to admin_product_path(product.id), data: { confirm: "Bạn chắc chắn muốn xóa sản phẩm này?" }, method: :delete, class: "btn btn-danger" do %>
+      <%= content_tag(:i, "", class: "fa fa-trash fa-fw", title: "Xóa sản phẩm") %>
+    <% end %>
   </td>
 </tr>

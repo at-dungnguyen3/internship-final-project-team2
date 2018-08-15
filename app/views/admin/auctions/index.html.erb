@@ -1,0 +1,37 @@
+<% provide(:page_name, 'Quản lý thông tin đấu giá sản phẩm') %>
+<% provide(:search_path, admin_products_path) %>
+<div class="row">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span>Danh sách thông tin đấu giá theo khung thời gian</span>
+    </div>
+    <div class="panel-body">
+      <div class="table-responsive">
+        <% if @auctions.any? %>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Thời gian bắt đầu</th>
+                <th>Thời gian kết thúc</th>
+                <th>Chu ky</th>
+                <th>Bước nhảy</th>
+                <th>Trạng thái</th>
+                <th>Chức năng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render @auctions %>
+            </tbody>
+          </table>
+        <%= will_paginate @auctions %>
+        <% else %>
+          <p>Không tìm thấy thông tin</p>
+        <% end %>
+        <%= link_to new_admin_product_auction_path(@product), class: "btn btn-success pull-right" do %>
+          <%= content_tag(:i, "", class: "fa fa-plus fa-fw", title: "Thêm danh mục") %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
