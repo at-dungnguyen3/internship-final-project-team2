@@ -12,7 +12,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_180_814_032_554) do
+ActiveRecord::Schema.define(version: 20_180_814_043_522) do
+  create_table 'auctions', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8', force: :cascade do |t|
+    t.bigint 'product_id'
+    t.time 'start_at'
+    t.time 'end_at'
+    t.time 'period'
+    t.integer 'bid_step', default: 0
+    t.integer 'status', default: 0
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['product_id'], name: 'index_auctions_on_product_id'
+  end
+
   create_table 'categories', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8', force: :cascade do |t|
     t.string 'name', null: false
     t.bigint 'categories_id'
@@ -56,5 +68,6 @@ ActiveRecord::Schema.define(version: 20_180_814_032_554) do
     t.string 'uid'
   end
 
+  add_foreign_key 'auctions', 'products'
   add_foreign_key 'products', 'categories'
 end

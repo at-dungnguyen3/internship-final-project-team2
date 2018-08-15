@@ -17,7 +17,10 @@ Rails.application.routes.draw do
   namespace :admin do
     root 'static_pages#home'
     resources :categories
-    resources :products
+    resources :products do
+      resources :auctions
+    end
     resources :pictures
+    resources :auctions
   end
 end

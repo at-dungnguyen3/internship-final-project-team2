@@ -1,0 +1,16 @@
+<tr>
+  <td><%= auction.id %></td>
+  <td><%= auction.start_at.strftime("%X") %></td>
+  <td><%= auction.end_at.strftime("%X") %></td>
+  <td><%= auction.period.strftime("%X") %></td>
+  <td><%= auction.bid_step %></td>
+  <td><%= show_status(auction) %></td>
+  <td>
+    <%= link_to edit_admin_product_auction_path(auction.product_id, auction.id), class: "btn btn-warning" do %>
+      <%= content_tag(:i, "", class: "fa fa-edit fa-fw", title: "Cập nhập thông tin đấu giá") %>
+    <% end %>
+    <%= link_to admin_product_auction_path(auction.product_id, auction.id), data: { confirm: "Bạn chắc chắn muốn xóa thông tin đấu giá?" }, method: :delete, class: "btn btn-danger" do %>
+      <%= content_tag(:i, "", class: "fa fa-trash fa-fw", title: "Xóa thông tin đấu giá") %>
+    <% end %>
+  </td>
+</tr>
