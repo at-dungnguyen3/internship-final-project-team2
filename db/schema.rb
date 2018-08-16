@@ -12,7 +12,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_180_814_043_522) do
+ActiveRecord::Schema.define(version: 20_180_815_092_455) do
+  create_table 'auction_details', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8', force: :cascade do |t|
+    t.bigint 'auction_id'
+    t.integer 'status'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['auction_id'], name: 'index_auction_details_on_auction_id'
+  end
+
   create_table 'auctions', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8', force: :cascade do |t|
     t.bigint 'product_id'
     t.time 'start_at'
@@ -23,6 +31,17 @@ ActiveRecord::Schema.define(version: 20_180_814_043_522) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['product_id'], name: 'index_auctions_on_product_id'
+  end
+
+  create_table 'bids', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8', force: :cascade do |t|
+    t.bigint 'auction_detail_id'
+    t.bigint 'user_id'
+    t.integer 'amount'
+    t.integer 'status'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['auction_detail_id'], name: 'index_bids_on_auction_detail_id'
+    t.index ['user_id'], name: 'index_bids_on_user_id'
   end
 
   create_table 'categories', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8', force: :cascade do |t|
@@ -68,6 +87,9 @@ ActiveRecord::Schema.define(version: 20_180_814_043_522) do
     t.string 'uid'
   end
 
+  add_foreign_key 'auction_details', 'auctions'
   add_foreign_key 'auctions', 'products'
+  add_foreign_key 'bids', 'auction_details'
+  add_foreign_key 'bids', 'users'
   add_foreign_key 'products', 'categories'
 end

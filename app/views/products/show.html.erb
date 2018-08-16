@@ -1,0 +1,56 @@
+<div class="container">    
+  <div class="row">
+    <div class="col-md-4">
+      <div class="row">
+        <div class="img-container">
+          <%= image_tag @product.pictures.first.image.url, alt: @product.name, id: "expandedImg" %>
+          <div id="imgtext"></div>
+        </div>
+      </div>
+      <div class="row">
+        <% @product.pictures.each do |p| %>
+          <div class="column-img">
+            <%= image_tag p.image.url, alt: @product.name, onclick: "changeImage(this)" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="auction_info">
+        <h1><%= @product.name %></h1>
+        <h2 class="time_count" ><%= @product.auctions.first.period.strftime("%H:%M:%S") %></h2>
+        <h2><%= @product.price %> VNĐ</h2>
+        <button class="btn btn-success">Đấu giá</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <table class="w3-table">
+      <tr>
+        <th>Tài khoản</th>
+        <th>Giá dự thầu</th>
+        <th>Thời gian đấu giá</th>
+      </tr>
+      <tr>
+        <td>Jill</td>
+        <td>100K</td>
+        <td><%= Time.now %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="row tab-product">
+    <div class="tab">
+      <button class="tablinks" onclick="openTab(event, 'description')" >Mô tả sản phẩm</button>
+      <button class="tablinks" onclick="openTab(event, 'detail')">Chi tiết sản phẩm</button>
+    </div>
+    <div id="description" class="tabcontent">
+      <h3>Mô tả sản phẩm</h3>
+      <p><%= @product.description %></p>
+    </div>
+
+    <div id="detail" class="tabcontent">
+      <h3>Chi tiết sản phẩm</h3>
+      <p><%= @product.detail %></p> 
+    </div>
+  </div>
+</div><br><br>

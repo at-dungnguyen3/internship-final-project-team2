@@ -12,6 +12,8 @@ class Product < ApplicationRecord
   validates :quantity, numericality: { greater_than_or_equal_to: 0 }
   validates :price, numericality: { greater_than_or_equal_to: 0 }
 
+  scope :is_online, -> { joins(:auctions).where('auctions.status = 1') }
+
   def self.search(term)
     if term
       where("LOWER(name) LIKE CONCAT('%',CONVERT('#{term.mb_chars.downcase}',BINARY), '%')").order('id DESC')
