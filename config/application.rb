@@ -19,12 +19,12 @@ module OnlineAuction
     config.active_record.default_timezone = :utc
     config.assets.enabled = true
 
-    # if defined?(Rails::Server)
-    #   config.after_initialize do
-    #     Rails.application.load_tasks
-    #     Rake::Task['init_data:load_auction_details'].invoke
-    #   end
-    # end
+    if defined?(Rails::Server)
+      config.after_initialize do
+        Rails.application.load_tasks
+        Rake::Task['init_data:send_data'].invoke
+      end
+    end
 
     config.cache_store = :redis_store, {
       host: '127.0.0.1',
