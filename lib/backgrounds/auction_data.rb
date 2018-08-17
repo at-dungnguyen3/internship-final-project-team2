@@ -1,13 +1,12 @@
 # frozen_string_literal: true
-
-include ApplicationHelper
+require "backgrounds/format_time_to_seconds"
 
 class AuctionData
   def self.send_data_to_redis
     @auction = Auction.all.includes(:product)
     @auction.each do |obj|
       auction_id = $redis.get(obj.id)
-      time = format_time_to_seconds(obj.period)
+      time = FormatTimeToSeconds.format_time_to_seconds(obj.period)
       data = {
         id: obj.id,
         start_at: obj.start_at,
@@ -57,7 +56,7 @@ class AuctionData
 
   def load_period_default(id)
     auction = Auction.find_by(id: id)
-    format_time_to_seconds(auction.period)
+    FormatTimeToSeconds.format_time_to_seconds(auction.period)
   end
 
   def load_price_default(id)

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     end
     resources :pictures
     resources :auctions
+    resources :users
   end
 
   resources :products, only: %i[show]
