@@ -40,6 +40,14 @@ class User < ApplicationRecord
         end
       end
     end
+
+    def search(term)
+      if term
+        where("LOWER(email) LIKE CONCAT('%',CONVERT('#{term.mb_chars.downcase}',BINARY), '%')").order('id DESC')
+      else
+        order('id DESC')
+      end
+    end
   end
 
   def authenticated?(attribute, token)

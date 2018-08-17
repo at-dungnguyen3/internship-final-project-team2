@@ -1,0 +1,36 @@
+<% provide(:page_name, 'Quản lý tài khoản') %>
+<% provide(:search_path, admin_users_path) %>
+<div class="row">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span>Danh sách tài khoản</span>
+    </div>
+    <div class="panel-body">
+      <div class="table-responsive">
+        <% if @users.any? %>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Họ và tên</th>
+                <th>Email</th>
+                <th>Trạng thái</th>
+                <th>Quyền</th>
+                <th>Chức năng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render @users %>
+            </tbody>
+          </table>
+        <%= will_paginate @users %>
+        <% else %>
+          <p>Không tìm thấy tài khoản</p>
+        <% end %>
+        <%= link_to new_admin_user_path, class: "btn btn-success pull-right" do %>
+          <%= content_tag(:i, "", class: "fa fa-plus fa-fw", title: "Thêm tài khoản") %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

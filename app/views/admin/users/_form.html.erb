@@ -1,0 +1,28 @@
+<%= form_for [:admin,@user] do |f| %>
+  <div class="form-group">
+    <%= f.label :first_name, "Họ" %>
+    <%= f.text_field :first_name, placeholder: 'Họ', class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :last_name, "Tên" %>
+    <%= f.text_field :last_name, placeholder: 'Tên', class: 'form-control' %>
+  </div>
+  <% if @user.new_record? %>
+    <div class="form-group">
+      <%= f.label :email, "Email" %>
+      <%= f.text_field :email, placeholder: 'Email', class: 'form-control' %>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label(:role, "Vai trò") %>
+    <%= f.select(:role, options_for_select(load_role, selected: @user.role), { include_blank: true }, class: 'form-control' ) %>
+  </div>
+  <% unless @user.new_record? %>
+  <div class="form-group">
+    <%= f.label(:activated?, "Kích hoạt") %>
+     <%= f.text_field :activated?, placeholder: 'Kích hoạt', class: 'form-control', disabled: true %>
+  </div>
+  <% end %>
+  <%= f.submit "Xác nhận", class: 'btn btn-success' %>
+  <%= f.submit "Nhập lại", class: 'btn btn-warning', type: 'reset' %>
+<% end %>
