@@ -1,0 +1,7 @@
+<div class="col-sm-4 product-item">
+  <div class="panel panel-primary">
+    <div class="panel-heading "><%= link_to product.name, product %></div>
+    <div class="panel-body"><%= link_to image_tag(product.pictures.first.image.url, alt: product.name, class: "img-responsive"), product %></div>
+    <div class="panel-footer"><p><span class="time_count"><%= product.auctions.first.period.strftime("%H:%M:%S") %></span><span class="pull-right"><%= product.price %><span></p></div>
+  </div>
+</div>
