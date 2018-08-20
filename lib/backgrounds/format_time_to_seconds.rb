@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FormatTimeToSeconds
   def self.format_time_to_seconds(time)
     time = time.strftime('%H:%M:%S').split(':')

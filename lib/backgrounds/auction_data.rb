@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require "backgrounds/format_time_to_seconds"
+
+require 'backgrounds/format_time_to_seconds'
 
 class AuctionData
   def self.send_data_to_redis

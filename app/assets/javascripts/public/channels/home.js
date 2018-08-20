@@ -25,7 +25,8 @@ $(document).on('turbolinks:load', function() {
 
 function time_convert(num)
  { 
-  var hours = Math.floor(num / 60);  
-  var minutes = num % 60;
-  return hours + ":" + minutes;         
+  var date = new Date(null);
+  date.setSeconds(num);
+  var result = date.toISOString().substr(11, 8);
+  return result;
 }
