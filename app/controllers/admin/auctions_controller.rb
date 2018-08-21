@@ -78,6 +78,7 @@ module Admin
           product_price: auction.product.price,
           product_quantity: auction.product.quantity,
           product_description: auction.product.description,
+          product_description: auction.product.detail,
           product_pictures: auction.product.pictures,
           product_category: auction.product.category_id
         }
@@ -98,6 +99,7 @@ module Admin
             data['product_name'] = auction.product.name
             data['product_price'] = auction.product.price
             data['product_description'] = auction.product.description
+            data['product_detail'] = auction.product.detail
             data['product_quantity'] = auction.product.quantity
             data['product_pictures'] = auction.product.pictures
             data['product_category'] = auction.product.category_id

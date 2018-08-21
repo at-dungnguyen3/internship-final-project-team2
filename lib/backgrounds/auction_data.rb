@@ -20,6 +20,7 @@ class AuctionData
         product_price: obj.product.price,
         product_quantity: obj.product.quantity,
         product_description: obj.product.description,
+        product_detail: obj.product.detail,
         product_pictures: obj.product.pictures,
         product_category: obj.product.category_id
       }

@@ -23,6 +23,7 @@ module OnlineAuction
       config.after_initialize do
         Rails.application.load_tasks
         Rake::Task['init_data:send_data'].invoke
+        Rake::Task['auction:publish_auction'].invoke
       end
     end
 

@@ -27,4 +27,5 @@ Rails.application.routes.draw do
   end
 
   resources :products, only: %i[show]
+  resources :auctions, only: :show
 end

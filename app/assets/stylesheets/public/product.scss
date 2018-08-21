@@ -58,7 +58,7 @@
 .tab {
   overflow: hidden;
   border: 1px solid #ccc;
-  background-color: rgb(0, 162, 255);
+  background-color: rgb(0, 0, 0);
   color: white;
 }
 
@@ -81,7 +81,7 @@
 
 /* Create an active/current tablink class */
 .tab button.active {
-  background-color: rgb(0, 17, 248);
+  background-color: gray;
 }
 
 /* Style the tab content */
