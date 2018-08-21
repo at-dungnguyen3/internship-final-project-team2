@@ -1,4 +1,4 @@
-<div class="container">    
+<div class="container" id="auction_id" data-auction-id="<%= params[:id] %>">    
   <div class="row">
     <div class="col-md-4">
       <div class="row">
@@ -7,7 +7,7 @@
           <div id="imgtext"></div>
         </div>
       </div>
-      <div class="row">
+      <div class="row" id="sub-image">
         <% @product.pictures.each do |p| %>
           <div class="column-img">
             <%= image_tag p.image.url, alt: @product.name, onclick: "changeImage(this)" %>
@@ -17,10 +17,16 @@
     </div>
     <div class="col-md-8">
       <div class="auction_info">
-        <h1><%= @product.name %></h1>
-        <h2 class="time_count" ><%= @product.auctions.first.period.strftime("%H:%M:%S") %></h2>
-        <h2><%= @product.price %> VNĐ</h2>
-        <button class="btn btn-success">Đấu giá</button>
+        <h1 id="product_name">LOADING</h1>
+        <h3>Thời gian còn lại: </h3><h2 class="time_count" id="auction_period">LOADING</h2>
+        <h3>Giá thầu hiện tại: <span id="auction_price">LOADING</span></h3>
+        <h3>Đấu giá ngay:</h3>
+        <div class="col-xs-4">
+          <input id="bid_amount" type='text' value="LOADING" class="form-control" disabled>
+        </div>
+        <div class="col-xs-3">
+          <button class="btn btn-success">Đấu giá</button>
+        </div>
       </div>
     </div>
   </div>
@@ -40,17 +46,21 @@
   </div>
   <div class="row tab-product">
     <div class="tab">
-      <button class="tablinks" onclick="openTab(event, 'description')" >Mô tả sản phẩm</button>
+      <button id="defaultOpen" class="tablinks" onclick="openTab(event, 'description')">Mô tả sản phẩm</button>
       <button class="tablinks" onclick="openTab(event, 'detail')">Chi tiết sản phẩm</button>
     </div>
     <div id="description" class="tabcontent">
       <h3>Mô tả sản phẩm</h3>
-      <p><%= @product.description %></p>
+      <div id="product_description">LOADING></div>
     </div>
 
     <div id="detail" class="tabcontent">
       <h3>Chi tiết sản phẩm</h3>
-      <p><%= @product.detail %></p> 
+      <div id="product_detail">LOADING</div> 
     </div>
   </div>
 </div><br><br>
+
+<script>
+  $("#defaultOpen").click();  
+</script>
