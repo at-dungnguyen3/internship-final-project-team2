@@ -1,0 +1,10 @@
+<li class="dropdown dropdown-submenu">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= category.name %></a>
+  <% if category.childs.any? %>
+  <ul class="dropdown-menu">
+    <% category.childs.each do |cat| %>
+      <li><%= link_to cat.name, category_path(cat.id) %></li>
+    <% end %>
+  </ul>
+  <% end %>
+</li>

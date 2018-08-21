@@ -10,7 +10,13 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><%= link_to "Trang chủ", root_path, class: "navbar-brand" %></li>
+        <li><%= link_to "Trang chủ", root_path, class: "navbar-brand" %></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Danh mục <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <%= render @categories %>
+          </ul>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if !logged_in? %>

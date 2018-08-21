@@ -15,7 +15,6 @@ function formatMoney(number) {
 
  function changeImage(imgs) {
   var expandImg = document.getElementById("expandedImg");
-  var imgText = document.getElementById("imgtext");
   expandImg.src = imgs.src;
 }
 
@@ -33,5 +32,17 @@ function openTab(evt, tabName) {
   }
 
   document.getElementById(tabName).style.display = "block";
-  evt.currentTarget.className += " active";
 }
+
+function loadDropMenu() {
+  $('ul.dropdown-menu [data-toggle=dropdown]').on('click', function(event) {
+    event.preventDefault(); 
+    event.stopPropagation(); 
+    $(this).parent().siblings().removeClass('open');
+    $(this).parent().toggleClass('open');
+  });
+}
+
+$(document).on('turbolinks:load', function() {
+  loadDropMenu();
+});

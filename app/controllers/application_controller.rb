@@ -3,6 +3,8 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
 
+  before_action :load_categories
+
   def not_found
     raise ActionController::RoutingError, 'Not Found'
   rescue StandardError
@@ -19,4 +21,10 @@ class ApplicationController < ActionController::Base
     flash[:danger] = 'Xin vui lòng đăng nhập tài khoản'
     redirect_to login_url
   end
+
+  private
+
+    def load_categories
+      @categories = Category.is_parent
+    end
 end
