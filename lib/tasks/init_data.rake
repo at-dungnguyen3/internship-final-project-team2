@@ -5,14 +5,13 @@ require 'backgrounds/auction_data'
 namespace :init_data do
   desc 'send data to channel'
   task send_data: :environment do
-    AuctionData.send_data_to_redis
     set_interval(1) do
       data = []
       auction_keys = $redis.keys('*')
       auction_keys.each do |key|
-        AuctionData.new.push_data(key, data)
+        AuctionData.new.push_all_data(key, data)
       end
-      ActionCable.server.broadcast 'home_channel', obj: data
+      ActionCable.server.broadcast('home_channel', obj: data) if data.any?
     end
   end
 end

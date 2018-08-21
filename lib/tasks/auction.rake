@@ -5,9 +5,9 @@ namespace :auction do
   task publish_auction: :environment do
     set_interval(1) do
       auctions = $redis.keys('*')
-      auctions.each do |auction|
-        data = JSON.parse($redis.get(auction))
-        ActionCable.server.broadcast("auction_#{auction}_channel", obj: data)
+      data = nil
+      auctions.each do |key|
+        data = AuctionData.new.push_data(key)
       end
     end
   end

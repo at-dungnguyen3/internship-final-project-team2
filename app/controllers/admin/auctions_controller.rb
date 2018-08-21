@@ -87,7 +87,7 @@ module Admin
 
       def update_auction_from_redis(auction)
         if $redis.get(auction.id)
-          if auction_params['status'] == 0
+          if auction_params['status'] == '0'
             $redis.del(auction.id)
           else
             data = JSON.parse($redis.get(auction.id))
@@ -108,7 +108,7 @@ module Admin
             $redis.set(auction.id, data.to_json)
           end
         else
-          add_to_redis(@auction) if auction_params['status'] == 1
+          add_to_redis(@auction) if auction_params['status'] == '1'
         end
       end
 

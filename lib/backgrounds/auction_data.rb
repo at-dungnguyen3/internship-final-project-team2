@@ -3,39 +3,28 @@
 require 'backgrounds/format_time_to_seconds'
 
 class AuctionData
-  def self.send_data_to_redis
-    @auction = Auction.all.includes(:product)
-    @auction.each do |obj|
-      auction_id = $redis.get(obj.id)
-      time = FormatTimeToSeconds.format_time_to_seconds(obj.period)
-      data = {
-        id: obj.id,
-        start_at: obj.start_at,
-        end_at: obj.end_at,
-        period: time,
-        bid_step: obj.bid_step,
-        status: obj.status,
-        product_id: obj.product_id,
-        product_name: obj.product.name,
-        product_price: obj.product.price,
-        product_quantity: obj.product.quantity,
-        product_description: obj.product.description,
-        product_detail: obj.product.detail,
-        product_pictures: obj.product.pictures,
-        product_category: obj.product.category_id
-      }
-      $redis.set(obj.id, data.to_json) if auction_id.nil?
-    end
-  end
-
-  def push_data(key, data)
-    auction = JSON.parse($redis.get(key))
-    if auction['status'] == 1 && auction['product_quantity'].positive?
+  def push_all_data(key, data)
+    obj = JSON.parse($redis.get(key))
+    now = FormatTimeToSeconds.format_time_to_seconds(Time.now)
+    start_at = FormatTimeToSeconds.format_time_to_seconds(obj['start_at'].to_time)
+    auction = Auction.find_by(id: obj['id'])
+    @auction_detail = auction.auction_details.last
+    if now == start_at && (!@auction_detail || @auction_detail.status == 1)
+      @auction_detail = auction.auction_details.create!(status: 0)
+    elsif @auction_detail && @auction_detail.status == 0
       decreasing_time(key)
       finish_auction(key)
       key = JSON.parse($redis.get(key))
       data << key
+    else
+      nil
     end
+  end
+
+  def push_data(key)
+    data = JSON.parse($redis.get(key))
+    auction = Auction.find_by(id: data['id'])
+    ActionCable.server.broadcast("auction_#{key}_channel", obj: data) if auction.auction_details.last && auction.auction_details.last.status == 0
   end
 
   def decreasing_time(key)
@@ -47,12 +36,20 @@ class AuctionData
   def finish_auction(key)
     auction = JSON.parse($redis.get(key))
     period = auction['period']
-    reset_auction_price(auction) if period.negative?
+    reset_auction(auction) if period.negative?
   end
 
-  def reset_auction_price(auction)
+  def reset_auction(auction)
+    @auction_detail.update_attributes(status: 1)
+    auction['product_quantity'] = auction['product_quantity'] - 1 if @auction_detail.bids.any?
     auction['period'] = load_period_default(auction['id'])
     auction['product_price'] = load_price_default(auction['id'])
+
+    end_at = FormatTimeToSeconds.format_time_to_seconds(auction['end_at'].to_time)
+    now = FormatTimeToSeconds.format_time_to_seconds(Time.now)
+
+    @auction_detail = Auction.find_by(id: auction['id']).auction_details.create!(status: 0) if end_at > now && auction['product_quantity'].positive?
+
     $redis.set(auction['id'], auction.to_json)
   end
 
