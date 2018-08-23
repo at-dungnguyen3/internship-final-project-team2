@@ -4,6 +4,7 @@ module Admin
   class UsersController < AdminController
     before_action :find_user, except: %i[index new create]
     after_action :activated, only: :create
+
     def index
       @users = User.search(params[:term]).paginate(page: params[:page], per_page: 10)
     end

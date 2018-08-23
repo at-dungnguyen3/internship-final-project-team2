@@ -11,20 +11,15 @@ class AuctionData
     @auction_detail = auction.auction_details.last
     if now == start_at && (!@auction_detail || @auction_detail.status == 1)
       @auction_detail = auction.auction_details.create!(status: 0)
-    elsif @auction_detail && @auction_detail.status == 0
+    elsif @auction_detail&.status&.zero?
       decreasing_time(key)
       finish_auction(key)
-      key = JSON.parse($redis.get(key))
-      data << key
+      obj = JSON.parse($redis.get(key))
+      ActionCable.server.broadcast("auction_#{key}_channel", obj: obj)
+      data << obj
     else
       nil
     end
-  end
-
-  def push_data(key)
-    data = JSON.parse($redis.get(key))
-    auction = Auction.find_by(id: data['id'])
-    ActionCable.server.broadcast("auction_#{key}_channel", obj: data) if auction.auction_details.last && auction.auction_details.last.status == 0
   end
 
   def decreasing_time(key)
@@ -41,7 +36,7 @@ class AuctionData
 
   def reset_auction(auction)
     @auction_detail.update_attributes(status: 1)
-    auction['product_quantity'] = auction['product_quantity'] - 1 if @auction_detail.bids.any?
+    # auction['product_quantity'] = auction['product_quantity'] - 1 if @auction_detail.bids.any?
     auction['period'] = load_period_default(auction['id'])
     auction['product_price'] = load_price_default(auction['id'])
 

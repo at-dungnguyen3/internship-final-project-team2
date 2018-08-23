@@ -29,4 +29,5 @@ Rails.application.routes.draw do
   resources :products, only: %i[show]
   resources :auctions, only: :show
   resources :categories, only: :show
+  resources :bids
 end
