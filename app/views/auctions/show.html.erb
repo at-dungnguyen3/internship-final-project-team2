@@ -31,17 +31,17 @@
     </div>
   </div>
   <div class="row">
-    <table class="w3-table">
-      <tr>
-        <th>Tài khoản</th>
-        <th>Giá dự thầu</th>
-        <th>Thời gian đấu giá</th>
-      </tr>
-      <tr>
-        <td>Jill</td>
-        <td>100K</td>
-        <td><%= Time.now %></td>
-      </tr>
+    <table class="w3-table" id="bids_history">
+      <thead>
+        <tr>
+          <th>Tài khoản</th>
+          <th>Giá dự thầu</th>
+          <th>Thời gian đấu giá</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render @bids %>
+      </tbody>
     </table>
   </div>
   <div class="row tab-product">

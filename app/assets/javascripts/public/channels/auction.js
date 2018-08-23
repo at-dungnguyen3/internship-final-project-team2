@@ -38,6 +38,7 @@ function load_auction(data) {
     min: data['product_price'] + data['bid_step'],
     step: data['bid_step']
   });
+  reset_bid_history(data['period']);
 }
 
 function bid() {
@@ -48,4 +49,10 @@ function bid() {
     }
   App.auction.send(data);
   });
+}
+
+function reset_bid_history(period) {
+  if (period == 0) {
+    $("#bids_history tbody").html("");
+  }
 }

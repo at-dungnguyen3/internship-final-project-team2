@@ -7,6 +7,7 @@ class AuctionsController < ApplicationController
   def show
     redirect_to root_path unless @auction.auction_details.last.status.zero?
     @product = @auction.product
+    @bids = @auction.auction_details.last.bids.newest
   end
 
   private

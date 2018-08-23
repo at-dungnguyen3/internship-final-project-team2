@@ -35,5 +35,19 @@ class AuctionDetail < ApplicationRecord
       auction['period'] = 20 if auction['period'] < 20
       $redis.set(key, auction.to_json)
     end
+    AuctionDetail.load_bids(key, auction_detail)
+  end
+
+  def self.load_bids(key, auction_detail)
+    data = []
+    auction_detail.bids.newest.each do |e|
+      obj = {
+        name: e.user.last_name + ' ' + e.user.first_name,
+        amount: e.amount,
+        created_at: e.created_at
+      }
+      data << obj
+    end
+    ActionCable.server.broadcast("bid_#{key}_channel", list: data)
   end
 end
