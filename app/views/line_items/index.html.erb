@@ -1,0 +1,27 @@
+<div class="container">    
+  <div class="row">
+    <h1>Giỏ hàng - đang chờ thanh toán</h1>
+    <table class="w3-table">
+      <thead>
+        <tr>
+          <th width="20%">Hình ảnh</th>
+          <th>Sản phẩm</th>
+          <th>Giá</th>
+          <th width="5%">Hủy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render @line_items %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2">Tổng cộng</td>
+          <td colspan="2"><%= @total_price %></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="row btn-order">
+    <%= link_to "Đặt hàng", edit_order_path(@order), class: "btn btn-warning pull-right" %>
+  </div>
+</div><br><br>

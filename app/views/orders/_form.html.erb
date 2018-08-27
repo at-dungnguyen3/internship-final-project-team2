@@ -1,0 +1,25 @@
+ <div class="col-lg-6">
+  <%= form_for(@order) do |f| %>
+    <div class="form-group">
+      <%= f.label :name, "Tên người đặt" %>
+      <%= f.text_field :name, value: "#{@order.user.last_name} #{@order.user.first_name}", class: "form-control", disabled: true %>
+    </div>
+    <div class="form-group">
+      <%= f.label :phone, "Số điện thoại" %>
+      <%= f.text_field :phone, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :address, "Địa chỉ" %>
+      <%= f.text_field :address, class: "form-control" %>
+    </div>
+      <div class="form-group">
+      <%= f.label :status, "Phương thức thanh toán" %>
+      <div>
+        <%= f.radio_button :status, 1 %> Thanh toán khi nhận hàng
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.submit "Thanh toán", class: "btn btn-warning pull-right" %>
+    </div>
+  <% end %>
+</div>

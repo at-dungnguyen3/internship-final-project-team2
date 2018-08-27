@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_180_822_024_308) do
+ActiveRecord::Schema.define(version: 20_180_827_021_556) do
   create_table 'auction_details', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8', force: :cascade do |t|
     t.bigint 'auction_id'
     t.integer 'status'
@@ -49,6 +49,16 @@ ActiveRecord::Schema.define(version: 20_180_822_024_308) do
     t.bigint 'categories_id'
     t.index ['categories_id'], name: 'index_categories_on_categories_id'
     t.index ['name', 'categories_id'], name: 'index_categories_on_name_and_categories_id', unique: true
+  end
+
+  create_table 'line_items', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8', force: :cascade do |t|
+    t.bigint 'order_id'
+    t.bigint 'product_id'
+    t.integer 'amount'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['order_id'], name: 'index_line_items_on_order_id'
+    t.index ['product_id'], name: 'index_line_items_on_product_id'
   end
 
   create_table 'orders', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8', force: :cascade do |t|
@@ -102,6 +112,8 @@ ActiveRecord::Schema.define(version: 20_180_822_024_308) do
   add_foreign_key 'auctions', 'products'
   add_foreign_key 'bids', 'auction_details'
   add_foreign_key 'bids', 'users'
+  add_foreign_key 'line_items', 'orders'
+  add_foreign_key 'line_items', 'products'
   add_foreign_key 'orders', 'users'
   add_foreign_key 'products', 'categories'
 end

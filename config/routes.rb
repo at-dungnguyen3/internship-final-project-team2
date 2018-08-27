@@ -26,8 +26,9 @@ Rails.application.routes.draw do
     resources :users
   end
 
-  resources :products, only: %i[show]
+  resources :products, only: :show
   resources :auctions, only: :show
   resources :categories, only: :show
-  resources :bids
+  resources :line_items, only: %i[index destroy]
+  resources :orders, only: %i[edit update]
 end

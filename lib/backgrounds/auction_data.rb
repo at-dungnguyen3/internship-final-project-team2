@@ -31,12 +31,17 @@ class AuctionData
   def finish_auction(key)
     auction = JSON.parse($redis.get(key))
     period = auction['period']
-    reset_auction(auction) if period.negative?
+    if period.negative?
+      add_to_cart if has_bids?
+      reset_auction(auction)
+    end
   end
 
   def reset_auction(auction)
-    @auction_detail.update_attributes(status: 1)
-    # auction['product_quantity'] = auction['product_quantity'] - 1 if @auction_detail.bids.any?
+    if has_bids?
+      @auction_detail.update_attributes(status: 1)
+      decreasing_product_quantity(auction['product_id'])
+    end
     auction['period'] = load_period_default(auction['id'])
     auction['product_price'] = load_price_default(auction['id'])
 
@@ -56,5 +61,35 @@ class AuctionData
   def load_price_default(id)
     auction = Auction.find_by(id: id)
     auction.product.price
+  end
+
+  def has_bids?
+    if @auction_detail.bids.any?
+      true
+    else
+      @auction_detail.destroy
+      false
+    end
+  end
+
+  def add_to_cart
+    last_bid = @auction_detail.bids.last
+    winner = last_bid.user
+    orders = winner.orders
+    if orders.any? && orders.last.status.zero?
+      orders.last.line_items.create!(product_id: @auction_detail.auction.product_id, amount: last_bid.amount)
+    else
+      orders.create!(status: 0)
+      orders.last.line_items.create!(product_id: @auction_detail.auction.product_id, amount: last_bid.amount)
+    end
+  end
+
+  def decreasing_product_quantity(product_id)
+    $redis.keys('*').each do |e|
+      auction = JSON.parse($redis.get(e))
+      auction['product_quantity'] = auction['product_quantity'] - 1 if auction['product_id'] == product_id
+      $redis.set(auction['id'], auction.to_json)
+    end
+    Product.find_by(id: product_id).decrement!(:quantity)
   end
 end
