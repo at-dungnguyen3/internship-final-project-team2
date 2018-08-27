@@ -23,6 +23,7 @@ $(document).on('turbolinks:load', function() {
       // delete(App.auction);
     }
   }
+  bid();
 });
 
 function load_auction(data) {
@@ -32,5 +33,26 @@ function load_auction(data) {
   $("#auction_price").html(formatMoney(data['product_price']));
   $("#product_description").html(data['product_description']);
   $("#product_detail").html(data['product_detail']);
-  $("#bid_amount").attr('value',formatMoney(data['product_price']));
+  $("#bid_amount").attr({
+    value: data['product_price'] + data['bid_step'],
+    min: data['product_price'] + data['bid_step'],
+    step: data['bid_step']
+  });
+  reset_bid_history(data['period']);
+}
+
+function bid() {
+  $('#bid_btn').on('click', function(){
+    data = {
+      amount: $("#bid_amount").val(),
+      user_id: $("#current_user").data('user-id')
+    }
+  App.auction.send(data);
+  });
+}
+
+function reset_bid_history(period) {
+  if (period == 0) {
+    $("#bids_history tbody").html("");
+  }
 }

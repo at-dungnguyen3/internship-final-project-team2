@@ -6,4 +6,8 @@ class AuctionChannel < ApplicationCable::Channel
   end
 
   def unsubcribed; end
+
+  def receive(data)
+    AuctionDetail.bid(data, params[:auction_id])
+  end
 end
