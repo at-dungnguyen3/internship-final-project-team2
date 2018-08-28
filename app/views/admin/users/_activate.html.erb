@@ -1,0 +1,5 @@
+<% if user.activated? %>
+  <%= link_to "Đã kích hoạt", "#", class: "btn btn-success", id: "activate-user", data: { remote: true, id: user.id } %>
+<% else %>
+  <%= link_to "Chưa kích hoạt", "#", class: "btn btn-default", id: "activate-user", data: { remote: true, id: user.id } %>
+<% end %>

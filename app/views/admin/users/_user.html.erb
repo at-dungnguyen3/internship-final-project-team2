@@ -2,8 +2,8 @@
   <td><%= user.id %></td>
   <td><%= user.last_name + " " + user.first_name %></td>
   <td><%= user.email %></td>
-  <td><%= user.activated? %></td>
-  <td><%= user.role %></td>
+  <td><%= render "admin/users/activate", user: user %></td>
+  <td><%= show_role user  %></td>
   <td>
     <%= link_to edit_admin_user_path(user), class: "btn btn-warning" do %>
       <%= content_tag(:i, "", class: "fa fa-edit fa-fw", title: "Cập nhập tài khoản") %>

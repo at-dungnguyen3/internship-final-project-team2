@@ -31,3 +31,32 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      user:
+        first_name: "Tên"
+        last_name: "Họ"
+        email: "Địa chỉ email"
+        password: "Mật khẩu"
+        password_confirmation: "Xác thực mật khẩu"
+    errors:
+      models:
+        user:
+          attributes:
+            first_name:
+              blank: "không được trống"
+              too_long: "phải nhỏ hơn hoặc bằng 50 ký tự"
+            last_name:
+              blank: "không được trống"
+              too_long: "phải nhỏ hơn hoặc bằng 50 ký tự"
+            email:
+              blank: "không được trống"
+              too_long: "phải nhỏ hơn hoặc bằng 255 ký tự"
+              invalid: "sai định dạng"
+              taken: "đã có người sử dụng"
+            password:
+              blank: "không được trống"
+              too_short: "phải lớn hơn hoặc bằng 6 ký tự"
+            password_confirmation:
+              blank: "không được trống"
+              confirmation: "không đúng"

@@ -1,4 +1,5 @@
-<%= form_for [:admin,@user] do |f| %>
+<%= form_for [:admin, @user] do |f| %>
+  <%= render "shared/error_messages", object: f.object %>
   <div class="form-group">
     <%= f.label :first_name, "Họ" %>
     <%= f.text_field :first_name, placeholder: 'Họ', class: 'form-control' %>
@@ -12,17 +13,18 @@
       <%= f.label :email, "Email" %>
       <%= f.text_field :email, placeholder: 'Email', class: 'form-control' %>
     </div>
+    <div class="form-group">
+      <%= f.label :password, "Mật khẩu" %>
+      <%= f.password_field :password, placeholder: 'Mật khẩu', class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :password_confirmation, "Nhập lại mật khẩu" %>
+      <%= f.password_field :password_confirmation, placeholder: 'Nhập lại mật khẩu', class: 'form-control' %>
+    </div>
   <% end %>
   <div class="form-group">
     <%= f.label(:role, "Vai trò") %>
-    <%= f.select(:role, options_for_select(load_role, selected: @user.role), { include_blank: true }, class: 'form-control' ) %>
+    <%= f.select(:role, options_for_select(load_role, selected: @user.role), {}, class: 'form-control' ) %>
   </div>
-  <% unless @user.new_record? %>
-  <div class="form-group">
-    <%= f.label(:activated?, "Kích hoạt") %>
-     <%= f.text_field :activated?, placeholder: 'Kích hoạt', class: 'form-control', disabled: true %>
-  </div>
-  <% end %>
   <%= f.submit "Xác nhận", class: 'btn btn-success' %>
-  <%= f.submit "Nhập lại", class: 'btn btn-warning', type: 'reset' %>
 <% end %>
