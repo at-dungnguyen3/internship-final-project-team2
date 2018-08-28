@@ -5,6 +5,8 @@ class Product < ApplicationRecord
   has_many :pictures, dependent: :destroy
   accepts_nested_attributes_for :pictures, allow_destroy: true
   has_many :auctions, dependent: :destroy
+  has_many :line_items, dependent: :destroy
+  has_many :orders, through: :line_items
 
   validates :name, presence: true
   validates :description, presence: true

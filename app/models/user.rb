@@ -5,7 +5,8 @@ class User < ApplicationRecord
   before_save :downcase_email
   before_create :create_activation_digest
 
-  has_many :bids
+  has_many :bids, dependent: :destroy
+  has_many :orders, dependent: :destroy
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
