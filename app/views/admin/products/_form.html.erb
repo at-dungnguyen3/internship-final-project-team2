@@ -1,4 +1,5 @@
 <%= form_for [:admin,@product] do |f| %>
+  <%= render "shared/error_messages", object: f.object %>
   <div class="form-group">
     <%= f.label :name, "Tên sản phẩm" %>
     <%= f.text_field :name, placeholder: 'Tên sản phẩm', class: 'form-control' %>

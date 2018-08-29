@@ -41,6 +41,7 @@ module Admin
         if parent_cat.nil? || (parent_cat && parent_cat.parent.nil? && ((@category.parent.nil? && @category.childs.empty?) || !@category.parent.nil?))
           @category.update(category_params)
         else
+          @category.errors[:categories_id] << 'vượt quá số cấp cho phép'
           false
         end
       if update
@@ -53,8 +54,11 @@ module Admin
     end
 
     def destroy
-      # xử lý thêm khi có products
-      if @category.destroy
+      cats = @category.childs.any? ? @category.childs.map(&:id) : @category.id
+      products = Product.in_categories(cats).in_cart
+      if products.any?
+        flash[:warning] = 'Không thể xóa danh mục. Vẫn còn sản phẩm trong danh mục trong giỏ hàng chưa thanh toán'
+      elsif @category.destroy
         flash[:success] = 'Xóa danh mục thành công'
       else
         flash[:danger] = 'Xóa danh mục thất bại'

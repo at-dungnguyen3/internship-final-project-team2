@@ -15,6 +15,8 @@ class Product < ApplicationRecord
   validates :price, numericality: { greater_than_or_equal_to: 0 }
 
   scope :is_online, -> { joins(:auctions).where('auctions.status = 1') }
+  scope :in_cart, -> { joins(:line_items).where('line_items.order_id IN (SELECT id FROM orders WHERE status < 2)') }
+  scope :in_categories, ->(cat_ids) { where('category_id IN (?)', cat_ids) }
 
   def self.search(term)
     if term
