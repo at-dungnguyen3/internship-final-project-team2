@@ -464,5 +464,13 @@ table.dataTable thead .sorting:after {
 }
 
 img {
-  display:block; width:100%; height:auto;
+  display:block;
+  width: 100%;
+}
+
+#preview img {
+  display: inline-block;
+  margin: 5px;
+  padding: 5px;
+  width: 20%;  
 }

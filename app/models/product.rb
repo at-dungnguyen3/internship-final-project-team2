@@ -8,9 +8,9 @@ class Product < ApplicationRecord
   has_many :line_items, dependent: :destroy
   has_many :orders, through: :line_items
 
-  validates :name, presence: true
-  validates :description, presence: true
-  validates :detail, presence: true
+  validates :name, presence: true, length: { maximum: 65 }
+  validates :description, presence: true, length: { minimum: 80 }
+  validates :detail, presence: true, length: { minimum: 80 }
   validates :quantity, numericality: { greater_than_or_equal_to: 0 }
   validates :price, numericality: { greater_than_or_equal_to: 0 }
 

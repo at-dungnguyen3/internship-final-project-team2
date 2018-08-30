@@ -4,29 +4,32 @@
   <div class="panel panel-default">
     <div class="panel-body">
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-lg-3">
           <div>
-            <span>Tên sản phẩm: </span> <%= @product.name %>
+            <h4><strong>Tên sản phẩm: </strong> <%= @product.name %></h4>
           </div>
           <div>
-            <span>Tên danh mục: </span> <%= @product.category.name %>
+            <h4><strong>Tên danh mục: </strong> <%= @product.category.name %></h4>
           </div>
           <div>
-            <span>Số lượng: </span> <%= @product.quantity %>
+            <h4><strong>Số lượng: </strong> <%= @product.quantity %></h4>
           </div>
           <div>
-            <span>Giá: </span> <%= @product.price %>
+            <h4><strong>Giá: </strong> <%= @product.price %></h4>
           </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-lg-9">
           <%= render partial: "picture", collection: @product.pictures %>
         </div>
         <div class="clearfix"></div>
       </div>
       <div class="row">
-        <div><p>Mô tả: </p><%= @product.description %></div>
-        <br>
-        <div><p>Chi tiết</p><%= @product.detail %></div>
+        <div class="col-lg-12">
+          <h4><strong>Mô tả:</strong> </h4><%= @product.description.html_safe %>
+        </div>
+        <div class="col-lg-12">
+          <h4><strong>Chi tiết:</strong></h4><%= @product.detail.html_safe %>
+        </div>
       </div>
     </div>
   </div>

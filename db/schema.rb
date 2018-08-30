@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_180_827_021_556) do
+ActiveRecord::Schema.define(version: 20_180_830_095_441) do
   create_table 'auction_details', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8', force: :cascade do |t|
     t.bigint 'auction_id'
     t.integer 'status'
@@ -51,6 +51,18 @@ ActiveRecord::Schema.define(version: 20_180_827_021_556) do
     t.index ['name', 'categories_id'], name: 'index_categories_on_name_and_categories_id', unique: true
   end
 
+  create_table 'ckeditor_assets', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8', force: :cascade do |t|
+    t.string 'data_file_name', null: false
+    t.string 'data_content_type'
+    t.integer 'data_file_size'
+    t.string 'type', limit: 30
+    t.integer 'width'
+    t.integer 'height'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['type'], name: 'index_ckeditor_assets_on_type'
+  end
+
   create_table 'line_items', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8', force: :cascade do |t|
     t.bigint 'order_id'
     t.bigint 'product_id'
@@ -82,7 +94,7 @@ ActiveRecord::Schema.define(version: 20_180_827_021_556) do
 
   create_table 'products', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8', force: :cascade do |t|
     t.string 'name', null: false
-    t.string 'description', null: false
+    t.text 'description', null: false
     t.text 'detail', null: false
     t.integer 'quantity', default: 0
     t.integer 'price', default: 0

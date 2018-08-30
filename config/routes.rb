@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
   mount ActionCable.server => '/cable'
@@ -21,7 +22,7 @@ Rails.application.routes.draw do
     resources :products do
       resources :auctions
     end
-    resources :pictures
+    resources :pictures, only: %i[edit update destroy]
     resources :auctions
     resources :users
   end

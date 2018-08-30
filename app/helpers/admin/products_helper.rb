@@ -2,6 +2,6 @@
 
 module Admin::ProductsHelper
   def select_childs_categories
-    Category.where('categories_id IS NOT NULL').collect { |cat| [cat.name, cat.id] }
+    Category.where('categories_id IS NOT NULL').collect { |cat| [cat.parent.name + ' --- ' + cat.name, cat.id] }
   end
 end

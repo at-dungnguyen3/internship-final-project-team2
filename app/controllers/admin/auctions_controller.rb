@@ -18,7 +18,7 @@ module Admin
       if @auction.save
         add_to_redis(@auction) if @auction.status == 1
         respond_to do |format|
-          format.html { redirect_to admin_product_auctions_url(@product.id), notice: 'Thêm thông tin đấu giá thành công' }
+          format.html { redirect_to admin_product_auctions_url(@product.id), flash: { success: 'Thêm thông tin đấu giá thành công' } }
         end
       else
         respond_to do |format|
@@ -33,7 +33,7 @@ module Admin
       respond_to do |format|
         if @auction.update(auction_params)
           update_auction_from_redis(@auction)
-          format.html { redirect_to admin_product_auctions_url(@auction.product.id), notice: 'Cập nhập thông tin đấu giá thành công' }
+          format.html { redirect_to admin_product_auctions_url(@auction.product.id), flash: { success: 'Cập nhập thông tin đấu giá thành công' } }
         else
           format.html { render :edit }
         end
@@ -43,9 +43,9 @@ module Admin
     def destroy
       respond_to do |format|
         if @auction.status.zero? && @auction.destroy
-          format.html { redirect_to admin_product_auctions_url(@auction.product.id), notice: 'Xóa thành công' }
+          format.html { redirect_to admin_product_auctions_url(@auction.product.id), flash: { success: 'Xóa thành công' } }
         else
-          format.html { redirect_to admin_product_auctions_url(@auction.product.id), notice: 'Xóa không thành công' }
+          format.html { redirect_to admin_product_auctions_url(@auction.product.id), flash: { success: 'Xóa không thành công' } }
         end
       end
     end
