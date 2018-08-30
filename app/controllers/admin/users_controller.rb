@@ -3,7 +3,6 @@
 module Admin
   class UsersController < AdminController
     before_action :find_user, except: %i[index new create]
-    after_action :activated, only: :create
 
     def index
       @users = User.search(params[:term]).paginate(page: params[:page], per_page: 10)
@@ -16,13 +15,13 @@ module Admin
     end
 
     def create
-      @user = User.new(user_params)
-      respond_to do |format|
-        if @user.save
-          format.html { redirect_to admin_users_path, notice: 'Thêm tài khoản thành công' }
-        else
-          format.html { render :new }
-        end
+      @user = User.new user_params
+      if @user.save
+        @user.activate
+        flash[:success] = 'Thêm tài khoản thành công'
+        redirect_to admin_users_path
+      else
+        render :new
       end
     end
 
@@ -30,8 +29,8 @@ module Admin
 
     def update
       respond_to do |format|
-        if @user.update(user_params)
-          format.html { redirect_to admin_users_path, notice: 'Cập nhập tài khoản thành công' }
+        if @user.update user_params
+          format.html { redirect_to admin_users_path, flash: { success: 'Cập nhập tài khoản thành công' } }
         else
           format.html { render :edit }
         end
@@ -40,10 +39,10 @@ module Admin
 
     def destroy
       respond_to do |format|
-        if @user.destroy
-          format.html { redirect_to admin_users_path, notice: 'Xóa thành công' }
+        if !@user.admin? && @user.destroy
+          format.html { redirect_to admin_users_path, flash: { success: 'Xóa tài khoản thành công' } }
         else
-          format.html { redirect_to admin_users_path, notice: 'Xóa không thành công' }
+          format.html { redirect_to admin_users_path, flash: { danger: 'Xóa tài khoản không thành công' } }
         end
       end
     end
@@ -56,10 +55,6 @@ module Admin
 
       def find_user
         (@user = User.find_by(id: params[:id])) or not_found
-      end
-
-      def activated
-        @user.activate
       end
   end
 end

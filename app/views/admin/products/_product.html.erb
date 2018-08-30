@@ -1,6 +1,6 @@
 <tr>
   <td><%= product.id %></td>
-  <td><%= image_tag product.pictures.first.image.url if product.pictures.any? %></td>
+  <td><%= image_tag(product.pictures.first.image.url, class: "img-responsive") if product.pictures.any? %></td>
   <td><%= link_to product.name, admin_product_path(product.id) %></td>
   <td><%= product.category.name if !product.category.nil? %></td>
   <td><%= product.quantity %></td>

@@ -31,3 +31,72 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      user:
+        first_name: "Tên"
+        last_name: "Họ"
+        email: "Địa chỉ email"
+        password: "Mật khẩu"
+        password_confirmation: "Xác thực mật khẩu"
+      category:
+        name: "Danh mục"
+        categories_id: "Danh mục"
+      product:
+        name: "Tên sản phẩm"
+        category: "Danh mục"
+        quantity: "Số lượng"
+        price: "Giá"
+        description: "Mô tả"
+        detail: "Chi tiết"
+      auction:
+        start_at: "Thời gian bắt đầu"
+        end_at: "Thời gian kết thúc"
+        bid_step: "Số tiền mỗi lần đấu giá"
+        period: "Thời gian đấu giá"
+    errors:
+      models:
+        user:
+          attributes:
+            first_name:
+              blank: "không được trống"
+              too_long: "tối đa 50 ký tự"
+            last_name:
+              blank: "không được trống"
+              too_long: "tối đa 50 ký tự"
+            email:
+              blank: "không được trống"
+              too_long: "tối đa 255 ký tự"
+              invalid: "sai định dạng"
+              taken: "đã có người sử dụng"
+            password:
+              blank: "không được trống"
+              too_short: "ít nhất 6 ký tự"
+            password_confirmation:
+              blank: "không được trống"
+              confirmation: "không đúng"
+        category:
+          attributes:
+            name:
+              blank: "không được trống"
+              too_long: "tối đa 65 ký tự"
+              taken: "đã bị trùng"
+        product:
+          attributes:
+            name:
+              blank: "không được trống"
+              too_long: "tối đa 65 ký tự"
+            category:
+              required: "phải tồn tại"
+            quantity:
+            price:
+            description:
+              blank: "không được trống"
+              too_short: "ít nhất 80 ký tự"
+            detail:
+              blank: "không được trống"
+              too_short: "ít nhất 80 ký tự"
+        auction:
+          attributes:
+            bid_step:
+              greater_than_or_equal_to: "tối thiểu 1000 VNĐ"

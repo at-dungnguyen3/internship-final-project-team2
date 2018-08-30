@@ -1,4 +1,5 @@
 <%= form_for [:admin,@product] do |f| %>
+  <%= render "shared/error_messages", object: f.object %>
   <div class="form-group">
     <%= f.label :name, "Tên sản phẩm" %>
     <%= f.text_field :name, placeholder: 'Tên sản phẩm', class: 'form-control' %>
@@ -17,20 +18,19 @@
   </div>
   <div class="form-group">
     <%= f.label :description, "Mô tả sản phẩm" %>
-    <%= f.text_area :description, class: 'form-control' %>
+    <%= f.cktext_area :description, class: 'form-control' %>
   </div>
    <div class="form-group">
     <%= f.label :detail, "Chi tiết sản phẩm" %>
-    <%= f.text_area :detail, class: 'form-control' %>
+    <%= f.cktext_area :detail, class: 'form-control' %>
   </div>
-  <% if @product.new_record? %>
-    <div class="form-group">
-      <%= f.fields_for :pictures do |p| %>
-        <%= f.label :image, "Hình ảnh" %>
-        <%= f.file_field :image, multiple: true, name: "product[pictures_attributes][][image]", accept: 'image/jpeg,image/gif,image/png', class: 'form-control' %>
-      <% end %>
-    </div>
-  <% end %>
+  <div class="form-group">
+    <%= f.fields_for @product.pictures.build do |p| %>
+      <%= f.label :image, "Hình ảnh" %>
+      <%= f.file_field :image, multiple: true, name: "pictures[image][]", accept: 'image/jpeg,image/gif,image/png', class: 'upload-image form-control' %>
+    <% end %>
+    <div id="preview"></div>
+  </div>
   <%= f.submit "Xác nhận", class: 'btn btn-success' %>
   <%= f.submit "Nhập lại", class: 'btn btn-warning', type: 'reset' %>
 <% end %>

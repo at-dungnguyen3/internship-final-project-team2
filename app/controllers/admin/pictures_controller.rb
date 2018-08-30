@@ -8,13 +8,19 @@ module Admin
 
     def update
       respond_to do |format|
-        format.html { redirect_to admin_product_url(@picture.product.id), notice: 'Cập nhập hình ảnh thành công' } if @picture.update(picture_params)
+        if @picture.update(picture_params)
+          change_image_in_redis(@picture.product)
+          format.html { redirect_to admin_product_url(@picture.product.id), flash: { success: 'Cập nhập hình ảnh thành công' } }
+        end
       end
     end
 
     def destroy
       respond_to do |format|
-        format.html { redirect_to admin_product_url(@picture.product.id), notice: 'Xóa ảnh thành công' } if @picture.destroy
+        if @picture.destroy
+          change_image_in_redis(@picture.product)
+          format.html { redirect_to admin_product_url(@picture.product.id), flash: { success: 'Xóa ảnh thành công' } }
+        end
       end
     end
 
@@ -26,6 +32,16 @@ module Admin
 
       def find_picture
         (@picture = Picture.find_by(id: params[:id])) || not_found
+      end
+
+      def change_image_in_redis(product)
+        $redis.keys('*').each do |key|
+          auction = JSON.parse($redis.get(key))
+          if auction['product_id'] == product.id
+            auction['product_pictures'] = product.pictures
+            $redis.set(key, auction.to_json)
+          end
+        end
       end
   end
 end

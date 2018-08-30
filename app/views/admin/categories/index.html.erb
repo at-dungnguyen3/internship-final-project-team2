@@ -1,6 +1,7 @@
 <% provide(:page_name, 'Quản lý danh mục') %>
 <% provide(:search_path, admin_categories_path) %>
 <div class="row">
+  <%= render "admin/shared/flash_message" %>
   <div class="panel panel-default">
     <div class="panel-heading">
       <span><%= @category.nil? ? 'Danh sách danh mục cha' : @category.name %></span>

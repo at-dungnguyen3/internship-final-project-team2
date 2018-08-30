@@ -3,9 +3,9 @@
 class Category < ApplicationRecord
   has_many :childs, foreign_key: 'categories_id', class_name: Category.name, dependent: :destroy
   belongs_to :parent, foreign_key: 'categories_id', class_name: Category.name, optional: true
-  has_many :products
+  has_many :products, dependent: :destroy
 
-  validates :name, presence: true, uniqueness: { scope: :categories_id }
+  validates :name, presence: true, length: { maximum: 65 }, uniqueness: { scope: :categories_id }
 
   scope :another_categories, ->(id) { where('id != ?', id) }
   scope :is_parent, -> { where categories_id: nil }

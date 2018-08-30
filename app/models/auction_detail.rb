@@ -2,7 +2,7 @@
 
 class AuctionDetail < ApplicationRecord
   belongs_to :auction
-  has_many :bids
+  has_many :bids, dependent: :destroy
 
   scope :is_active, -> { where('status = 0') }
 
