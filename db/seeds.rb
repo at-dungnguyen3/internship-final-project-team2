@@ -12,8 +12,8 @@ parent_cat_2 = Category.create!(name: 'Đồng hồ để bàn')
 
 child_ids = []
 
-5.times do
-  child = Category.create!(name: Faker::Cat.name, categories_id: [parent_cat_1.id, parent_cat_2.id].sample)
+5.times do |i|
+  child = Category.create!(name: "#{Faker::Cat.name} #{i}", categories_id: [parent_cat_1.id, parent_cat_2.id].sample)
   child_ids << child.id
 end
 

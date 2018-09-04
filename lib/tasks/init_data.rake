@@ -8,8 +8,10 @@ namespace :init_data do
     set_interval(1) do
       data = []
       auction_keys = $redis.keys('*')
-      auction_keys.each do |key|
-        AuctionData.new.push_all_data(key, data)
+      if auction_keys.any?
+        auction_keys.each do |key|
+          AuctionData.new.push_all_data(key, data)
+        end
       end
       ActionCable.server.broadcast('home_channel', obj: data) if data.any?
     end

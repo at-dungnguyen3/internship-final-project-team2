@@ -1,0 +1,36 @@
+<% provide(:page_name, 'Quản lý đơn hàng') %>
+<% provide(:search_path, admin_orders_path) %>
+<div class="row">
+  <%= render "admin/shared/flash_message" %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span>Danh sách đơn hàng</span>
+    </div>
+    <div class="panel-body">
+      <div class="table-responsive">
+        <% if @orders.any? %>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Tên khách hàng</th>
+                <th>Địa chỉ</th>
+                <th>Số điện thoại</th>
+                <th>Tổng tiền</th>
+                <th>Ngày đặt hàng</th>
+                <th>Trạng thái</th>
+                <th>Chức năng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render @orders %>
+            </tbody>
+          </table>
+        <%= will_paginate @orders %>
+        <% else %>
+          <p>Không tìm thấy đơn hàng</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

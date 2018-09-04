@@ -45,7 +45,7 @@ module Admin
         if @auction.status.zero? && @auction.destroy
           format.html { redirect_to admin_product_auctions_url(@auction.product.id), flash: { success: 'Xóa thành công' } }
         else
-          format.html { redirect_to admin_product_auctions_url(@auction.product.id), flash: { success: 'Xóa không thành công' } }
+          format.html { redirect_to admin_product_auctions_url(@auction.product.id), flash: { danger: 'Xóa không thành công. Sản phẩm đang được đấu giá' } }
         end
       end
     end

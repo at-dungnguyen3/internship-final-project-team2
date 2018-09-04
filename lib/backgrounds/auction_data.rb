@@ -82,6 +82,8 @@ class AuctionData
       orders.create!(status: 0)
       orders.last.line_items.create!(product_id: @auction_detail.auction.product_id, amount: last_bid.amount)
     end
+    total_price = orders.last.total_price += last_bid.amount
+    orders.last.update_attributes(total_price: total_price)
   end
 
   def decreasing_product_quantity(product_id)
