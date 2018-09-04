@@ -6,4 +6,14 @@ class Order < ApplicationRecord
   has_many :products, through: :line_items
 
   scope :unpay, -> { where(status: 0) }
+
+  def self.search(term, status)
+    if term
+      joins(:user).where("LOWER(first_name) LIKE CONCAT('%',CONVERT('#{term.mb_chars.downcase}',BINARY), '%')").order('id DESC')
+    elsif status
+      where('status = ?', status).order('id DESC')
+    else
+      order('id DESC')
+    end
+  end
 end

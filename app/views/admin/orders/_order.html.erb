@@ -1,0 +1,17 @@
+<tr>
+  <td><%= order.id %></td>
+  <td><%= link_to(order.user.last_name + " " + order.user.first_name, admin_user_path(order.user)) %></td>
+  <td><%= order.address %></td>
+  <td><%= order.phone %></td>
+  <td><%= order.total_price %></td>
+  <td><%= order.updated_at %></td>
+  <td><%= show_order_status(order.status) %></td>
+  <td>
+    <%= link_to admin_order_path(order), class: "btn btn-success" do %>
+      <%= content_tag(:i, "", class: "fa fa-info fa-fw", title: "Chi tiết đơn hàng") %>
+    <% end %>
+    <%= link_to edit_admin_order_path(order), class: "btn btn-warning" do %>
+      <%= content_tag(:i, "", class: "fa fa-edit fa-fw", title: "Cập nhập thông tin đấu giá") %>
+    <% end %>
+  </td>
+</tr>

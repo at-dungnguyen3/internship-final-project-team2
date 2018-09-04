@@ -1,0 +1,18 @@
+<% provide(:page_name, 'Cập nhập đơn hàng') %>
+<% provide(:search_path, admin_orders_path) %>
+<div class="row">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="col-lg-6">
+        <%= form_for [:admin,@order] do |f| %>
+          <%= render "shared/error_messages", object: f.object %>
+          <div class="form-group">
+            <%= f.label(:status, "Trạng thái") %>
+            <%= f.select(:status, options_for_select(select_status, selected: @order.status), { include_blank: true }, class: 'form-control' ) %>
+          </div>
+          <%= f.submit "Xác nhận", class: 'btn btn-success' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

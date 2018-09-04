@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     resources :pictures, only: %i[edit update destroy]
     resources :auctions
     resources :users
+    resources :orders, except: %i[new create delete]
   end
 
   resources :products, only: :show
