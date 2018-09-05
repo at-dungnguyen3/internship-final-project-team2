@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root 'static_pages#home'
+    get '/chart_users', to: 'static_pages#chart_users'
+    get '/chart_orders', to: 'static_pages#chart_orders'
     resources :categories
     resources :products do
       resources :auctions
@@ -26,6 +28,8 @@ Rails.application.routes.draw do
     resources :auctions
     resources :users
     resources :orders, except: %i[new create delete]
+    get '/statistics', to: 'statistics#index'
+    get '/chart', to: 'statistics#chart'
   end
 
   resources :products, only: :show

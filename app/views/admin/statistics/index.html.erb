@@ -1,0 +1,32 @@
+<% provide(:page_name, 'Thống kê') %>
+<% provide(:search_path, admin_products_path) %>
+<div class="row">
+  <%= render "admin/shared/flash_message" %>
+  <%= form_tag(admin_statistics_path, method: :get) do %>
+    <div class="form-inline">
+      <%= label_tag(:type, "Thống kê:") %>
+      <%= select_tag(:type, options_for_select(select_type), { include_blank: true, class: "form-control", required: true }) %>
+      <%= label_tag(:start_at, "Ngày bắt đầu") %>
+      <%= date_field_tag(:start_at, "", required: true, class: "form-control") %>
+      <%= label_tag(:start_at, "Ngày kết thúc") %>
+      <%= date_field_tag(:end_at, "", required: true, class: "form-control") %>
+      <%= submit_tag 'Tìm kiếm', class: "btn btn-success" %>
+    </div>
+  <% end %>
+</div>
+<hr>
+<% if @data.any? %>
+  <div class="row">
+    <h2>Số lượng <%= type_description(params[:type]) %> từ ngày <%= params[:start_at] %> đến ngày <%= params[:end_at] %><span class="pull-right">Tổng số: <%= @count %></span></h2> 
+    <table class="table">
+      <tbody>
+        <%= render @data %>
+      </tbody>
+    </table>
+    <%= will_paginate @data %>
+  </div>
+  <hr>
+  <div class="row">
+    <div id="chart" data-search="<%= params[:type] %>" data-start_at="<%= params[:start_at] %>" data-end_at="<%= params[:end_at] %>" style="height: 370px; width: 100%;"></div>
+  </div>
+<% end %>
