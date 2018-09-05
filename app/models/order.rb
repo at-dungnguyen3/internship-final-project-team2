@@ -6,6 +6,7 @@ class Order < ApplicationRecord
   has_many :products, through: :line_items
 
   scope :unpay, -> { where(status: 0) }
+  scope :not_cart, -> { where('status IN (1, 2)') }
 
   def self.search(term, status)
     if term

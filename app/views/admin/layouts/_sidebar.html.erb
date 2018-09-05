@@ -5,7 +5,7 @@
         <%= render 'admin/shared/simple_search_form' %>
       </li>
       <li>
-        <%= link_to admin_root_path do %>
+        <%= link_to(admin_root_path) do %>
           <%= content_tag(:i, "", class: "fa fa-dashboard fa-fw") %>
           Trang chủ
         <% end %>
@@ -44,6 +44,12 @@
             <%= link_to "Đơn hàng đã bị hủy", admin_orders_path(status: 2) %>
           </li>
         </ul>
+      </li>
+      <li>
+        <%= link_to admin_statistics_path do %>
+          <%= content_tag(:i, "", class: "fa fa-bar-chart fa-fw") %>
+          Thông kế
+        <% end %>
       </li>
     </ul>
   </div>
