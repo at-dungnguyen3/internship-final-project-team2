@@ -19,6 +19,20 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li>
+          <%= link_to line_items_path do %>
+            <%= content_tag(:span, "", class: "glyphicon glyphicon-shopping-cart")%>
+            Giỏ hàng
+          <% end %>
+        </li>
+        <% if logged_in? %>
+        <li>
+          <%= link_to user_auction_details_path(current_user.id) do %>
+            <%= content_tag(:span, "", class: "glyphicon glyphicons-justify")%>
+            Đấu giá của tôi
+          <% end %>
+        </li>
+        <% end %>
         <% if !logged_in? %>
           <li>
             <%= link_to login_path do %>
@@ -46,12 +60,6 @@
             </ul>
           </li>
         <% end %>
-        <li>
-          <%= link_to line_items_path do %>
-            <%= content_tag(:span, "", class: "glyphicon glyphicon-shopping-cart")%>
-            Giỏ hàng
-          <% end %>
-        </li>
       </ul>
     </div>
   </div>

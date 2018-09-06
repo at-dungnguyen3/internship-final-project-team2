@@ -4,7 +4,9 @@ class AuctionDetail < ApplicationRecord
   belongs_to :auction
   has_many :bids, dependent: :destroy
 
-  scope :is_active, -> { where('status = 0') }
+  scope :is_active, -> { where('auction_details.status = 0') }
+  scope :bids_of_user, ->(id) { joins(:bids).where('bids.user_id = ?', id).order('bids.updated_at DESC') }
+  scope :is_finish, -> { where('auction_details.status = 1') }
 
   def self.bid(data, key)
     auction = JSON.parse($redis.get(key))
