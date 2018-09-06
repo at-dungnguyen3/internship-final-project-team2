@@ -1,2 +1,50 @@
-<%= @user.first_name %>
-<%= @user.last_name %>
+<div class="container">
+  <div class="row">
+  <div class="col-md-10 ">
+    <form class="form-horizontal">
+      <fieldset>
+
+      <!-- Form Name -->
+      <legend>My Profile</legend>
+
+      <!-- Text input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="Name (Full name)">Name (Full name)</label>  
+      <div class="col-md-4">
+        <div class="input-group">
+        <div class="input-group-addon">
+         <i class="glyphicon glyphicon-user"></i>
+        </div>
+          <p class="form-control input-md"><%= @user.first_name + " " + @user.last_name %></p>
+        </div>
+      </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="Email">Email</label>  
+      <div class="col-md-4">
+        <div class="input-group">
+        <div class="input-group-addon">
+         <i class="glyphicon glyphicon-envelope"></i>
+        </div>
+       <p class="form-control input-md"><%= @user.email %></p>
+        </div>
+      </div>
+      </div>
+
+       <div class="form-group">
+        <label class="col-md-4 control-label" for="Created At">Created At</label>  
+      <div class="col-md-4">
+        <div class="input-group">
+        <div class="input-group-addon">
+         <i class="glyphicon glyphicon-info-sign"></i>
+        </div>
+          <p class="form-control input-md"><%= @user.created_at %></p>
+        </div>
+      </div>
+      </div>
+
+
+  </div>
+  </div>
+</div>
