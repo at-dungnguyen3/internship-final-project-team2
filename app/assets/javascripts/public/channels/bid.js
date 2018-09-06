@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function() {
+$(document).ready(function() {
   view = document.querySelector("#auction_id");
   if (view) {
     App.bid = App.cable.subscriptions.create(

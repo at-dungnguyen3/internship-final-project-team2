@@ -8,7 +8,8 @@ class OrdersController < ApplicationController
   def update
     if @order.update(order_params)
       update_total_price(@order)
-      flash[:success] = 'Đặt hàng thành công'
+      UserMailer.order_confirmation(current_user, @order).deliver_now
+      flash[:success] = 'Kiểm tra email để xác nhận chi tiết đơn hàng'
       redirect_to root_path
     else
       render :edit

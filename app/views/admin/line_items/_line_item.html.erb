@@ -1,8 +1,8 @@
 <tr>
-  <td><%= line_item.id %></td>
-  <td><%= image_tag(line_item.product.pictures.first.image.url, class: "img-responsive") if line_item.product.pictures.any? %></td>
-  <td><%= line_item.product.name %></td>
-  <td><%= line_item.product.category.name %></td>
-  <td><%= line_item.amount %></td>
-  <td><%= line_item.created_at %></td>
+  <td class="align-middle"><%= line_item.id %></td>
+  <td class="align-middle"><%= image_tag(line_item.product.pictures.first.image.url, class: "img-responsive") if line_item.product.pictures.any? %></td>
+  <td class="align-middle"><%= line_item.product.name %></td>
+  <td class="align-middle"><%= line_item.product.category.name %></td>
+  <td class="align-middle"><%= line_item.amount %></td>
+  <td class="align-middle"><%= line_item.created_at %></td>
 </tr>

@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function() {
+$(document).ready(function() {
   view = document.querySelector("#auction_id");
   if (view) {
     App.auction = App.cable.subscriptions.create(
@@ -10,6 +10,7 @@ $(document).on('turbolinks:load', function() {
         conntected: function() {
         },
         disconnected: function() {
+          swal("Mất kết nối đến server", "Vui lòng kiểm tra lại đường truyền mạng", "error");
         },
         received: function(data) {
           load_auction(data);  
@@ -23,7 +24,7 @@ $(document).on('turbolinks:load', function() {
       // delete(App.auction);
     }
   }
-  bid();
+  bid(view.dataset.auctionId);
 });
 
 function load_auction(data) {
@@ -41,13 +42,9 @@ function load_auction(data) {
   reset_bid_history(data['period']);
 }
 
-function bid() {
+function bid(auction_id) {
   $('#bid_btn').on('click', function(){
-    data = {
-      amount: $("#bid_amount").val(),
-      user_id: $("#current_user").data('user-id')
-    }
-  App.auction.send(data);
+    user_id = get_top_bider_id(auction_id);
   });
 }
 
@@ -55,4 +52,35 @@ function reset_bid_history(period) {
   if (period == 0) {
     $("#bids_history tbody").html("");
   }
+}
+
+function get_top_bider_id(auction_id){
+  var data = { auction_id: auction_id }
+  $.ajax({
+    url: '/top_bider',
+    type: 'GET',
+    contentType: 'application/json; charset=utf-8',
+    dataType: 'JSON',
+    data: data,
+    success: function (response) {
+      uid = $("#current_user").data('user-id');
+      if (uid === response) {
+        swal({
+          title: "Warning",
+          text: "Bạn đang là người giữ giá cao nhất",
+          icon: "warning",
+          time: 3000,
+        })
+      } else {
+        bid_data = {
+          amount: $("#bid_amount").val(),
+          user_id: uid,
+        }
+        App.auction.send(bid_data);
+      }
+    },
+    error: function (err) {
+      console.log(err);
+    }
+  });
 }

@@ -32,24 +32,23 @@ class AuctionData
     auction = JSON.parse($redis.get(key))
     period = auction['period']
     if period.negative?
-      add_to_cart if has_bids?
-      reset_auction(auction)
+      if has_bids?
+        @auction_detail.update_attributes(status: 1)
+        decreasing_product_quantity(auction['product_id'])
+        add_to_cart
+        ActionCable.server.broadcast("finish_#{key}_channel", obj: @auction_detail.bids.last.user_id)
+      end
+      reset_auction(key)
     end
   end
 
-  def reset_auction(auction)
-    if has_bids?
-      @auction_detail.update_attributes(status: 1)
-      decreasing_product_quantity(auction['product_id'])
-    end
+  def reset_auction(key)
+    auction = JSON.parse($redis.get(key))
     auction['period'] = load_period_default(auction['id'])
     auction['product_price'] = load_price_default(auction['id'])
-
     end_at = FormatTimeToSeconds.format_time_to_seconds(auction['end_at'].to_time)
     now = FormatTimeToSeconds.format_time_to_seconds(Time.now)
-
     @auction_detail = Auction.find_by(id: auction['id']).auction_details.create!(status: 0) if end_at > now && auction['product_quantity'].positive?
-
     $redis.set(auction['id'], auction.to_json)
   end
 
@@ -88,9 +87,11 @@ class AuctionData
 
   def decreasing_product_quantity(product_id)
     $redis.keys('*').each do |e|
-      auction = JSON.parse($redis.get(e))
-      auction['product_quantity'] = auction['product_quantity'] - 1 if auction['product_id'] == product_id
-      $redis.set(auction['id'], auction.to_json)
+      auc = JSON.parse($redis.get(e))
+      if auc['product_id'] == product_id
+        auc['product_quantity'] = auc['product_quantity'] - 1
+        $redis.set(e, auc.to_json)
+      end
     end
     Product.find_by(id: product_id).decrement!(:quantity)
   end

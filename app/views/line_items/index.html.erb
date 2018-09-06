@@ -1,27 +1,42 @@
-<div class="container">    
-  <div class="row">
-    <h1>Giỏ hàng - đang chờ thanh toán</h1>
-    <table class="w3-table">
-      <thead>
-        <tr>
-          <th width="20%">Hình ảnh</th>
-          <th>Sản phẩm</th>
-          <th>Giá</th>
-          <th width="5%">Hủy</th>
-        </tr>
-      </thead>
-      <tbody>
-        <%= render @line_items %>
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="2">Tổng cộng</td>
-          <td colspan="2"><%= @total_price %></td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
-  <div class="row btn-order">
-    <%= link_to "Đặt hàng", edit_order_path(@order), class: "btn btn-warning pull-right" %>
-  </div>
+<div class="container">
+  <% if @line_items %>    
+    <div class="row">
+      <h1>Giỏ hàng - đang chờ thanh toán</h1>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th width="10%">Hình ảnh</th>
+            <th>Sản phẩm</th>
+            <th>Giá</th>
+            <th width="5%">Hủy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render @line_items %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2"><h4>Phí vận chuyển</h4></td>
+            <td colspan="2" id="ship_price" data-ship-price="29000"></td>
+          </tr>
+          <tr>
+            <td colspan="2"><h4>Tổng cộng</h4></td>
+            <td colspan="2" id="total_price" data-total-price="<%= @total_price %>"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="row btn-order">
+      <%= link_to "Đặt hàng", edit_order_path(@order), class: "btn btn-warning pull-right" %>
+    </div>
+  <% else %>
+    <h2>Giỏ hàng rỗng</h2>
+  <% end %>
 </div><br><br>
+
+<script>
+  var ship = $('#ship_price').data('ship-price');
+  $('#ship_price').html('<h4>' + formatMoney(ship) + '</h4>');
+  var total = $('#total_price').data('total-price');
+  $('#total_price').html('<h4>' + formatMoney(total+ship) + '</h4>');
+</script>

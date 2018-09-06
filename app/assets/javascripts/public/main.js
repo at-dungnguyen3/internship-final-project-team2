@@ -43,6 +43,6 @@ function loadDropMenu() {
   });
 }
 
-$(document).on('turbolinks:load', function() {
+$(document).ready(function() {
   loadDropMenu();
 });

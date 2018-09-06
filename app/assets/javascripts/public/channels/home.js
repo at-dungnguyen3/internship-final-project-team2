@@ -8,7 +8,7 @@ App.home = App.cable.subscriptions.create('HomeChannel', {
   }
 });
 
-$(document).on('turbolinks:load', function() {
+$(document).ready(function() {
   get_home();
   get_category();
 });

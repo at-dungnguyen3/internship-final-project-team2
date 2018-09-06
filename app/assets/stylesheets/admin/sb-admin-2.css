@@ -474,3 +474,7 @@ img {
   padding: 5px;
   width: 20%;  
 }
+
+.align-middle {
+  vertical-align: middle !important;
+}

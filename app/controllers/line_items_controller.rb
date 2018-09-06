@@ -24,6 +24,7 @@ class LineItemsController < ApplicationController
         $redis.set(auction['id'], auction.to_json)
       end
       Product.find_by(id: product_id).increment!(:quantity)
+      @order.destroy if @order.line_items.empty?
     else
       flash[:danger] = 'Xóa không thành công'
     end
