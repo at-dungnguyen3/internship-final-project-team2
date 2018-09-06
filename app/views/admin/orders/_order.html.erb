@@ -1,12 +1,12 @@
 <tr>
-  <td><%= order.id %></td>
-  <td><%= link_to(order.user.last_name + " " + order.user.first_name, admin_user_path(order.user)) %></td>
-  <td><%= order.address %></td>
-  <td><%= order.phone %></td>
-  <td><%= order.total_price %></td>
-  <td><%= order.updated_at %></td>
-  <td><%= show_order_status(order.status) %></td>
-  <td>
+  <td class="align-middle"><%= order.id %></td>
+  <td class="align-middle"><%= link_to(order.user.last_name + " " + order.user.first_name, admin_user_path(order.user)) %></td>
+  <td class="align-middle"><%= order.address %></td>
+  <td class="align-middle"><%= order.phone %></td>
+  <td class="align-middle"><%= order.total_price %></td>
+  <td class="align-middle"><%= order.updated_at %></td>
+  <td class="align-middle"><%= show_order_status(order.status) %></td>
+  <td class="align-middle">
     <%= link_to admin_order_path(order), class: "btn btn-success" do %>
       <%= content_tag(:i, "", class: "fa fa-info fa-fw", title: "Chi tiết đơn hàng") %>
     <% end %>

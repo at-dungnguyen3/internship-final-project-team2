@@ -1,11 +1,11 @@
 <tr>
-  <td><%= product.id %></td>
-  <td><%= image_tag(product.pictures.first.image.url, class: "img-responsive") if product.pictures.any? %></td>
-  <td><%= link_to product.name, admin_product_path(product.id) %></td>
-  <td><%= product.category.name if !product.category.nil? %></td>
-  <td><%= product.quantity %></td>
-  <td><%= product.price %></td>
-  <td>
+  <td class="align-middle"><%= product.id %></td>
+  <td class="align-middle"><%= image_tag(product.pictures.first.image.url, class: "img-responsive") if product.pictures.any? %></td>
+  <td class="align-middle"><%= link_to product.name, admin_product_path(product.id) %></td>
+  <td class="align-middle"><%= product.category.name if !product.category.nil? %></td>
+  <td class="align-middle"><%= product.quantity %></td>
+  <td class="align-middle"><%= product.price %></td>
+  <td class="align-middle">
     <%= link_to admin_product_auctions_path(product.id), class: "btn btn-primary" do %>
       <%= content_tag(:i, "", class: "fa fa-clock-o fa-fw", title: "Thêm phiên đấu giá") %>
     <% end %>

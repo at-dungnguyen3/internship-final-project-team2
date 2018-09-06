@@ -1,0 +1,41 @@
+<h1>Đấu giá online</h1>
+
+<p>Chào bạn <%= "#{@user.first_name}  #{@user.last_name}" %>,</p>
+
+<p>Thông tin đơn đặt hàng của bạn:</p>
+  <table width="100%" border="1" cellspacing="0" cellpadding="0">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th width="10%">Hình ảnh</th>
+        <th>Sản phẩm</th>
+        <th>Giá</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @order.line_items.each_with_index do |val, index| %>
+        <tr>
+          <td align="center"><%= index + 1%></td>
+          <td align="center"><%= image_tag val.product.pictures.first.image.url, alt: val.product.name, width: "100px", height: "100px" %></td>
+          <td align="center"><%= val.product.name %></td>
+          <td align="center"><%= val.amount %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2"></td>
+        <td align="center">Phí vận chuyển</td>
+        <td align="center">29000</td>
+      </tr>
+      <tr>
+        <td colspan="2"></td>
+        <td align="center">Tổng cộng</td>
+        <td align="center"><%= @order.total_price + 29000 %></td>
+      </tr>
+    </tfoot>
+  </table>
+
+<p>Vui lòng kiểm tra lại thông tin đơn hàng, nếu có sai xót hãy liên hệ với chúng tôi:</p>
+<p><b>Số điện thoại: </b>0935634876</p>
+<p><b>Địa chỉ: </b>123 Điện Biên Phủ, TP. Đà Nẵng</p> 

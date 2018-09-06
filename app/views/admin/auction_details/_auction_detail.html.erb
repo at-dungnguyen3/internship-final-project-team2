@@ -27,10 +27,10 @@
                 <tbody>
                   <%  auction_detail.bids.each do |e|%>
                     <tr>
-                      <td><%= e.id %></td>
-                      <td><%= e.user.last_name + " " + e.user.first_name %></td>
-                      <td><%= e.amount %></td>
-                      <td><%= e.updated_at %></td>
+                      <td class="align-middle"><%= e.id %></td>
+                      <td class="align-middle"><%= e.user.last_name + " " + e.user.first_name %></td>
+                      <td class="align-middle"><%= e.amount %></td>
+                      <td class="align-middle"><%= e.updated_at %></td>
                     </tr>
                   <% end %>
                 </tbody>

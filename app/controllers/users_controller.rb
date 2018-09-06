@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :logged_in_user, only: %i[show edit update]
   before_action :find_user, except: %i[index new create]
 
   def index; end
@@ -15,10 +16,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       @user.send_activation_email
-      flash[:info] = 'Please check your email to activate your account.'
+      flash[:info] = 'Vui lòng kiểm trả email để kích hoạt tài khoản'
       redirect_to root_url
     else
-      flash.now[:danger] = 'Đăng ký không thành công'
       render :new
     end
   end

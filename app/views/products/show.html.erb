@@ -1,0 +1,48 @@
+<div class="container" id="auction_id" data-auction-id="<%= params[:id] %>">    
+  <div class="row">
+    <div class="col-md-4">
+      <div class="row">
+        <div class="img-container">
+          <%= image_tag @product.pictures.first.image.url, alt: @product.name, id: "expandedImg" %>
+          <div id="imgtext"></div>
+        </div>
+      </div>
+      <div class="row" id="sub-image">
+        <% @product.pictures.each do |p| %>
+          <div class="column-img">
+            <%= image_tag p.image.url, alt: @product.name, onclick: "changeImage(this)" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <h1><%= @product.name %></h1>
+      <h3>Danh mục: <%= @product.category.name %></h3>
+      <h3 id="price" data-price="<%=@product.price%>"><%= @product.price %></h3>
+      <h3>Số lượng đã được đấu giá: <%= @product.line_items.size %></h3>
+      <h3>Trạng thái: <%= show_product_quantity @product.quantity %></h3>
+    </div>
+  
+  </div>
+  <div class="row tab-product">
+    <div class="tab">
+      <button id="defaultOpen" class="tablinks" onclick="openTab(event, 'description')">Mô tả sản phẩm</button>
+      <button class="tablinks" onclick="openTab(event, 'detail')">Chi tiết sản phẩm</button>
+    </div>
+    <div id="description" class="tabcontent">
+      <h3>Mô tả sản phẩm</h3>
+      <div id="product_description"><%= @product.description %></div>
+    </div>
+
+    <div id="detail" class="tabcontent">
+      <h3>Chi tiết sản phẩm</h3>
+      <div id="product_detail"><%= @product.detail %></div> 
+    </div>
+  </div>
+</div><br><br>
+
+<script>
+  $("#defaultOpen").click();
+  var total = $('#price').data('price');
+  $('#price').html("Giá ban đầu: " + formatMoney(total));
+</script>

@@ -37,4 +37,5 @@ Rails.application.routes.draw do
   resources :categories, only: :show
   resources :line_items, only: %i[index destroy]
   resources :orders, only: %i[edit update]
+  get '/top_bider', to: 'auction_details#top_bider'
 end

@@ -1,6 +1,106 @@
 <div class="container">    
   <div class="row">
     <h1>Đặt hàng - xác nhận đơn hàng</h1>
-    <%= render "orders/form" %>
+    <hr>
+    <section>
+      <div class="wizard">
+        <ul class="nav nav-wizard">
+          <li class="active">
+            <a href="#step1" data-toggle="tab">Thông tin cá nhân</a>
+          </li>
+          <li class="disabled">
+            <a href="#step2" data-toggle="tab">Phương thức thanh toán</a>
+          </li>
+          <li class="disabled">
+            <a href="#step3" data-toggle="tab">Xác nhận đơn hàng</a>
+          </li>
+        </ul>
+        <%= form_for(@order) do |f| %>
+          <div class="tab-content">
+            <div class="tab-pane active" id="step1">
+              <h3>Bước 1 - Nhập thông tin người nhận</h3>
+              <hr>
+              <div class="col-md-3"></div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <%= f.label :name, "Tên người đặt" %>
+                  <%= f.text_field :name, value: "#{@order.user.last_name} #{@order.user.first_name}", class: "form-control", disabled: true %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :phone, "Số điện thoại" %>
+                  <%= f.text_field :phone, class: "form-control" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :address, "Địa chỉ" %>
+                  <%= f.text_field :address, class: "form-control" %>
+                </div>
+              </div>
+              <div class="clearfix">
+              </div>
+              <ul class="list-inline pull-right">
+                <li><button type="button" class="btn btn-primary">Tiếp theo</button></li>
+              </ul>
+            </div>
+            <div class="tab-pane" id="step2">
+              <h3>Bước 2 - Chọn phương thức thanh toán</h3>
+              <hr>
+              <div class="col-md-3"></div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <%= f.label :status, "Phương thức thanh toán" %>
+                  <div>
+                    <%= f.radio_button :status, 1 %> Thanh toán khi nhận hàng
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix">
+              </div>
+              <ul class="list-inline pull-right">
+                <li><button type="button" class="btn btn-primary order-confirm">Tiếp theo</button></li>
+              </ul>
+            </div>
+            <div class="tab-pane" id="step3">
+              <h3>Bước 3 - Xác nhận thông tin đặt hàng</h3>
+              <div class="col-md-3"></div>
+              <div class="col-md-6">
+                <h3>Tên khách hàng: <%= "#{@order.user.last_name} #{@order.user.first_name}" %></h3>
+                <h3>Số điện thoại: <span id="order_phone_confirm"></span></h3>
+                <h3>Địa chỉ: <span id="order_address_confirm"></span></h3>
+              </div>
+              <div class="clearfix">
+              </div>
+              <ul class="list-inline pull-right">
+                <li><button type="submit" class="btn btn-primary">Đặt hàng</button></li>
+              </ul>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        <% end %>
+      </div>
+    </section>
   </div>
 </div><br><br>
+
+<script>
+  $(document).ready(function () {
+    $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+      var $target = $(e.target);
+      if ($target.parent().hasClass('disabled')) {
+        return false;
+      }
+    });
+    $(".btn-primary").click(function (e) {
+      var $active = $('.wizard .nav-wizard li.active');
+      $active.next().removeClass('disabled');
+      nextTab($active);
+    });
+
+    $(".order-confirm").click(function (e) {
+      $('#order_phone_confirm').html($('#order_phone').val());
+      $('#order_address_confirm').html($('#order_address').val());
+    });
+  });
+  function nextTab(elem) {
+    $(elem).next().find('a[data-toggle="tab"]').click();
+  }
+</script>

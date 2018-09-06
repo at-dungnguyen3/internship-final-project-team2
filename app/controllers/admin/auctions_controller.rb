@@ -89,6 +89,7 @@ module Admin
         if $redis.get(auction.id)
           if auction_params['status'] == '0'
             $redis.del(auction.id)
+            @auction.auction_details.last.destroy if @auction.auction_details.any? && @auction.auction_details.last.status == 0
           else
             data = JSON.parse($redis.get(auction.id))
             period = format_time_to_seconds(auction.period)

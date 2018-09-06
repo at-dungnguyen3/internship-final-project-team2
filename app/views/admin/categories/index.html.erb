@@ -21,10 +21,10 @@
             <tbody>
               <% @categories.each_with_index do |cat, i| %>
               <tr>
-                <td><%= i + 1 %></td>
-                <td><%= link_to_if_has_childs(cat) %></td>
-                <td><%= parent_cat_name(cat.categories_id) %></td>
-                <td>
+                <td class="align-middle"><%= i + 1 %></td>
+                <td class="align-middle"><%= link_to_if_has_childs(cat) %></td>
+                <td class="align-middle"><%= parent_cat_name(cat.categories_id) %></td>
+                <td class="align-middle">
                   <%= link_to edit_admin_category_path(cat.id), class: "btn btn-warning" do %>
                     <%= content_tag(:i, "", class: "fa fa-edit fa-fw", title: "Cập nhập danh mục") %>
                   <% end %>

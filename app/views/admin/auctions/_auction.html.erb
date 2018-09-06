@@ -1,11 +1,11 @@
 <tr>
-  <td><%= auction.id %></td>
-  <td><%= auction.start_at.strftime("%X") %></td>
-  <td><%= auction.end_at.strftime("%X") %></td>
-  <td><%= auction.period.strftime("%X") %></td>
-  <td><%= auction.bid_step %></td>
-  <td><%= show_status(auction) %></td>
-  <td>
+  <td class="align-middle"><%= auction.id %></td>
+  <td class="align-middle"><%= auction.start_at.strftime("%X") %></td>
+  <td class="align-middle"><%= auction.end_at.strftime("%X") %></td>
+  <td class="align-middle"><%= auction.period.strftime("%X") %></td>
+  <td class="align-middle"><%= auction.bid_step %></td>
+  <td class="align-middle"><%= show_status(auction) %></td>
+  <td class="align-middle">
     <%= link_to edit_admin_product_auction_path(auction.product_id, auction.id), class: "btn btn-warning" do %>
       <%= content_tag(:i, "", class: "fa fa-edit fa-fw", title: "Cập nhập thông tin đấu giá") %>
     <% end %>
