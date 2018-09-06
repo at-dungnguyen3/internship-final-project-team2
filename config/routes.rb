@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'password_resets/new'
+  get 'password_resets/edit'
   mount Ckeditor::Engine => '/ckeditor'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
@@ -32,4 +34,5 @@ Rails.application.routes.draw do
   resources :categories, only: :show
   resources :line_items, only: %i[index destroy]
   resources :orders, only: %i[edit update]
+  resources :password_resets, only: [:new, :create, :edit, :update]
 end
