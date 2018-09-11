@@ -31,12 +31,12 @@
     </div>
     <div id="description" class="tabcontent">
       <h3>Mô tả sản phẩm</h3>
-      <div id="product_description"><%= @product.description %></div>
+      <div><%= @product.description.html_safe %></div>
     </div>
 
     <div id="detail" class="tabcontent">
       <h3>Chi tiết sản phẩm</h3>
-      <div id="product_detail"><%= @product.detail %></div> 
+      <div><%= @product.detail.html_safe %></div> 
     </div>
   </div>
 </div><br><br>

@@ -21,12 +21,12 @@
               <tr>
                 <td class="align-middle"><%= auc.id %></td>
                 <td class="align-middle">
-                  <%= link_to auction_path(auc) do %>
+                  <%= link_to auction_path(auc.auction) do %>
                     <%= image_tag auc.auction.product.pictures.first.image.url, alt: auc.auction.product.name, class: "img-responsive" %>
                   <% end %>
                 </td>
                 <td class="align-middle">
-                  <%= link_to auc.auction.product.name, auction_path(auc) %>
+                  <%= link_to auc.auction.product.name, auction_path(auc.auction) %>
                 </td>
                 <td class="align-middle"><%= show_bids_status auc.status %></td>
               </tr>

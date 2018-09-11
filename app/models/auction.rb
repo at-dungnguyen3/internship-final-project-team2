@@ -12,6 +12,7 @@ class Auction < ApplicationRecord
   validates :period, presence: true
   validate :end_at_must_greater_than_start_at
   validate :start_at_must_greater_or_equal_eight_clock
+  validate :period_time
 
   scope :is_active, -> { where('status = 1') }
 
@@ -36,6 +37,15 @@ class Auction < ApplicationRecord
   def end_at_must_less_or_equal_twenty_two_clock
     if format_time_to_s(self.end_at) > 79200
       errors[:end_at] << 'phải nhỏ hơn hoặc bằng 10 giờ tối'
+      false
+    else
+      true
+    end
+  end
+
+  def period_time
+    if format_time_to_s(self.period) < 20
+      errors[:period] << 'tối thiểu 20 giây'
       false
     else
       true

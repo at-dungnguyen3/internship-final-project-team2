@@ -7,8 +7,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-parent_cat_1 = Category.create!(name: 'Đồng hồ treo tường')
-parent_cat_2 = Category.create!(name: 'Đồng hồ để bàn')
+parent_cat_1 = Category.create!(name: 'Robo 1')
+parent_cat_2 = Category.create!(name: 'Robo 2')
 
 child_ids = []
 
@@ -29,9 +29,9 @@ end
   )
 end
 
-20.times do
-  Product.create!(
-    name: Faker::Name.name,
+10.times do |i|
+  product = Product.create!(
+    name: Faker::LeagueOfLegends.champion + "#{i}",
     category_id: child_ids.sample,
     quantity: rand(10..50),
     price: 10000,
@@ -46,4 +46,5 @@ end
 
     Nulla facilisi. Phasellus sit amet mi sed tortor facilisis facilisis ut commodo justo. Cras varius imperdiet augue, nec blandit purus commodo vel. Curabitur ac maximus arcu. Nam aliquet orci eu ex vestibulum maximus. Praesent a nulla ut massa maximus volutpat. In mauris mi, iaculis ac fermentum semper, blandit vel dui. Donec velit arcu, pulvinar ac metus non, vehicula aliquet mi. Pellentesque pulvinar purus sed lacinia faucibus. Maecenas placerat iaculis finibus. Aenean vitae nisi ac erat blandit facilisis ac vel enim. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
   )
+  #product.pictures.create!(image: "#{i}.png")
 end

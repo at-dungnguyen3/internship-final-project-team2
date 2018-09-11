@@ -44,7 +44,7 @@ function append_html(e) {
   html += '<div class="panel panel-primary">';
   html += '<div class="panel-heading "><a href="/auctions/' + e.id + '">' + e.product_name + '</a></div>';
   html += '<div class="panel-body"><a href="/auctions/' + e.id + '"><img src="' + e.product_pictures[0].image.url + '" alt="' + e.product_name + '" class="img-responsive"></a></div>';
-  html += '<div class="panel-footer"><p><span class="time_count">'+ time_convert(e.period) + '</span><span class="pull-right">' + formatMoney(e.product_price) + '</p></div>';
+  html += '<div class="panel-footer"><p><span class="time_count">'+ time_convert(e.period) + '</span><span class="pull-right home-price">' + formatMoney(e.product_price) + '</p></div>';
   html += '</div>';
   html += '</div>';
 }

@@ -53,6 +53,7 @@
             </a>
             <ul class="dropdown-menu">
               <li id="current_user" data-user-id="<%= current_user.id %>"><%= link_to "Trang cá nhân", current_user %></li>
+              <li> <%= link_to("Trang quản lý", admin_root_path) if current_user.admin? %></li>
               <li class="divider"></li>
               <li>
                 <%= link_to "Đăng xuất", logout_path, method: :delete %>
