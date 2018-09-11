@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   mount ActionCable.server => '/cable'
   get  '/signup', to: 'users#new'
   post '/signup', to: 'users#create'
-  resources :users
+  resources :users do
+    resources :auction_details, only: :index
+  end
   resources :account_activations, only: :edit
   root 'static_pages#home'
   get '/login', to: 'sessions#new'
